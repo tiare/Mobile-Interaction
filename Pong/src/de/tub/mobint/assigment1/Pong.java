@@ -7,7 +7,7 @@ import processing.core.*;
 public class Pong extends PApplet {
 
 	/**
-	 * 
+	 * @author Marcel Karsten (343619), Tiare Feuchtner (343...)
 	 */
 	private static final long serialVersionUID = 1L;
 
