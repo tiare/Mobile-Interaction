@@ -1,6 +1,48 @@
+#java specific
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+# Eclipse #
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+ 
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
+
+#OSX
+.DS_Store
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+#WINDOWS
+# Windows image file caches
+Thumbs.db 
+
+# Folder config file
+Desktop.ini
