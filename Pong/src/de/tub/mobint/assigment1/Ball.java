@@ -23,7 +23,8 @@ public class Ball extends Point2D.Float {
 	LinkedList<Point2D.Float> tail;
 	int tailLength = 5;
 	
-	Point2D.Float lastBounce;
+	LinkedList<Point2D.Float> lastBounces;
+	int bounceAmount = 3;
 	
 	public Ball(PApplet p){
 		super(0,0);
@@ -31,7 +32,7 @@ public class Ball extends Point2D.Float {
 		heading = processing.core.PConstants.PI/4.0f;
 		
 		tail = new LinkedList<Point2D.Float>();
-		lastBounce = new Point2D.Float(-1, -1);
+		lastBounces = new LinkedList<Point2D.Float>();
 		
 	}
 	
@@ -51,9 +52,12 @@ public class Ball extends Point2D.Float {
 			parent.point(p.x, p.y);
 		}
 		
-		if( lastBounce.x >= 0){
-			parent.stroke(255,0,0,122);
-			parent.point(lastBounce.x, lastBounce.y);
+		transparency = 122.0f;
+		step = 122.0f / (tail.size()+1.0f);
+		for( Point2D.Float lb : lastBounces){
+			transparency -= step;
+			parent.stroke(255,0,0,transparency);
+			parent.point(lb.x, lb.y);
 		}
 	}
 	
@@ -81,13 +85,18 @@ public class Ball extends Point2D.Float {
 	
 	public void horizontalBounce(){
 		heading *= -1;
-		lastBounce.setLocation(x, y);
+		
+		lastBounces.addFirst(new Point2D.Float(x, y));
+		if( lastBounces.size() > bounceAmount ) lastBounces.removeLast();
+		
 	}
 	
 	public void verticalBounce(){
-		heading = (heading - processing.core.PConstants.PI/2.0f) * -1.0f
+		heading = -(heading - processing.core.PConstants.PI/2.0f)
 				+ processing.core.PConstants.PI/2.0f;
-		lastBounce.setLocation(x, y);
+		
+		lastBounces.addFirst(new Point2D.Float(x, y));
+		if( lastBounces.size() > bounceAmount ) lastBounces.removeLast();
 	}
 	
 }

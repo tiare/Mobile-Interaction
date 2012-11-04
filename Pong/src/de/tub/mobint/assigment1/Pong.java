@@ -53,6 +53,11 @@ public class Pong extends PApplet {
 		rPaddle.setBounds(field.top, field.bottom);
 		
 		collisionDetections.add(new SimpleCollisionDetection(ball, field, lPaddle, rPaddle));
+		
+		PreciseCollisionDetection pcd = new PreciseCollisionDetection(ball, field, lPaddle, rPaddle);
+		pcd.setPApplet(this);
+		collisionDetections.add(pcd);
+		
 		AIs.add( new SimpleAI(ball, field, rPaddle));
 	}
 	
@@ -60,12 +65,17 @@ public class Pong extends PApplet {
 		float dT = 1.0f / frameRate;
 		//processInputs(); // user inputs
 		update(dT); // move objects
+		
+		
+		
 		render(); // draw
 	}
 	
 	private void resetBall( boolean p1 ){
 		ball.setLocation( p1 ? field.left + margin*0.5f : field.right - margin*0.5f,
 							field.verticalCenter);
+		float pi = processing.core.PConstants.PI;
+		ball.heading = p1 ? pi/4.0f : pi-pi/4.0f;
 	}
 	
 	private void render(){
@@ -107,7 +117,7 @@ public class Pong extends PApplet {
 		}
 		rPaddle.update(dT);
 		
-		ball.update(dT);
+		
 		
 		int collision = collisionDetections.get(cdIndex).update(dT);
 		if( collision > 0){
@@ -129,11 +139,32 @@ public class Pong extends PApplet {
 		}
 		
 		if( key == '+') ball.velocity += 20.0f;
-		if( key == '-') ball.velocity -= 20.0f;
+		if( key == '-'){
+			ball.velocity -= 20.0f;
+			if( ball.velocity < 20.0f) ball.velocity = 20.0f;
+		}
 		
-		if( key == 'c' ){
+		if( key == '*') fps += 5.0f;
+		if( key == '/'){
+			fps -= 5.0f;
+			if( fps < 1.0f) fps = 1.0f;
+		}
+		if(frameRate != fps ){
+			frameRate(fps);
+		}
+		
+		
+		if( key == 'b' ){
 			AILevel += 1;
 			if(AILevel > AIs.size() ) AILevel = 0;
+			System.out.println("use AI: " + AIs.get(AILevel-1).getName() );
+		}
+		
+		if( key == 'c' ){
+			cdIndex ++;
+			if(cdIndex >= collisionDetections.size() ) cdIndex = 0;
+			collisionDetections.get(cdIndex).init();
+			System.out.println("use collision detection: "+ collisionDetections.get(cdIndex).getName());
 		}
 	}
 	
@@ -149,7 +180,8 @@ public class Pong extends PApplet {
 	
 	
 	public static void main(String args[]) {
-		PApplet.main(new String[] { "--present", "de.tub.mobint.assigment1.Pong" });
+		//PApplet.main(new String[] { "--present", "de.tub.mobint.assigment1.Pong" });
+		PApplet.main(new String[] { "de.tub.mobint.assigment1.Pong" });
 	}
 }
 

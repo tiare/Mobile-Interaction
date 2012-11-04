@@ -15,4 +15,8 @@ public abstract class CollisionDetection {
 	}
 	
 	public abstract int update(float dT);
+	
+	public abstract String getName();
+	
+	public abstract void init();
 }

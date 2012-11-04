@@ -14,4 +14,5 @@ public abstract class ArtificialIntelligence {
 	}
 	
 	public abstract void update(float dT);
+	public abstract String getName();
 }

@@ -8,6 +8,11 @@ public class SimpleCollisionDetection extends CollisionDetection{
 
 	@Override
 	public int update(float dT) {
+		// let it be to late
+		ball.update(dT);
+		
+		
+		// fix it
 		if( ball.bottom() > field.bottom || ball.top() < field.top) ball.horizontalBounce(); 
 		
 		if( ball.left() < lPaddle.right() ){
@@ -21,6 +26,16 @@ public class SimpleCollisionDetection extends CollisionDetection{
 		}
 		
 		return 0;
+	}
+
+	@Override
+	public String getName() {
+		return "Simple";
+	}
+
+	@Override
+	public void init() {
+		
 	}
 
 }
