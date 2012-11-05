@@ -21,15 +21,16 @@ public class PreciseCollisionDetection extends CollisionDetection {
 	Vector3D top;
 	Vector3D bottom;
 	
-	Point2D nextHit; // posiion of next hit
+	Point2D nextHit; // position of next hit
 	float remainingTime; // time until next hit
 	int heading;
+	float halfBallWidth;
 	
 	public PreciseCollisionDetection(Ball ball, Field field,
 			VerticalPaddle lPaddle, VerticalPaddle rPaddle) {
 		super(ball, field, lPaddle, rPaddle);
 		
-		float halfBallWidth = ball.strokeWeight/2.0f;
+		halfBallWidth = ball.strokeWeight/2.0f;
 		
 		left = Vector3D.crossProduct( 	new Vector3D(lPaddle.right() + halfBallWidth, lPaddle.y, 1),
 										new Vector3D(lPaddle.right() + halfBallWidth, lPaddle.y+1, 1));
@@ -74,12 +75,29 @@ public class PreciseCollisionDetection extends CollisionDetection {
 		
 		if( heading == HEADING_LEFT ){
 			if( lPaddle.inRange(ball.y) )	ball.verticalBounce();
-			else							return -1;
+			else {
+				left = Vector3D.crossProduct(new Vector3D(field.left + halfBallWidth, lPaddle.y, 1),
+						new Vector3D(field.left + halfBallWidth, lPaddle.y+1, 1));
+				
+				if (ball.left() <= field.left) { 
+					left = Vector3D.crossProduct( 	new Vector3D(lPaddle.right() + halfBallWidth, lPaddle.y, 1),
+							new Vector3D(lPaddle.right() + halfBallWidth, lPaddle.y+1, 1));
+					return -1;
+				}
+			}
 		}
 		
 		if( heading == HEADING_RIGHT ){
 			if( rPaddle.inRange(ball.y) )	ball.verticalBounce();
-			else							return 1;
+			else { 
+				right = Vector3D.crossProduct( 	new Vector3D(field.right - halfBallWidth, rPaddle.y, 1),
+						new Vector3D(field.right - halfBallWidth, rPaddle.y+1, 1));
+				if (ball.right() >= field.right) {
+					right = Vector3D.crossProduct( 	new Vector3D(rPaddle.left() - halfBallWidth, rPaddle.y, 1),
+							new Vector3D(rPaddle.left() - halfBallWidth, rPaddle.y+1, 1));
+					return 1;
+				}
+			}
 		}
 		return 0;
 	}

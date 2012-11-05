@@ -17,12 +17,12 @@ public class SimpleCollisionDetection extends CollisionDetection{
 		
 		if( ball.left() < lPaddle.right() ){
 			if( lPaddle.inRange(ball.y) )	ball.verticalBounce();
-			else							return -1;
+			else if (ball.left() < field.left)	return -1;
 		}
 		
 		if( ball.right() > rPaddle.left() ){
 			if( rPaddle.inRange(ball.y) )	ball.verticalBounce();
-			else							return 1;
+			else if (ball.right() > field.right)	return 1;
 		}
 		
 		return 0;

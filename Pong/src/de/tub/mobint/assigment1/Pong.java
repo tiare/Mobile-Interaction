@@ -18,6 +18,7 @@ public class Pong extends PApplet {
 	float fps = 30.0f;
 	
 	int margin = 50;
+	int paddleOffset = 10;
 	
 	int scoreSize = 40;
 
@@ -45,12 +46,13 @@ public class Pong extends PApplet {
 		field = new Field(scoreSize + margin/2, height - margin/2, margin, width-margin);
 		
 		ball = new Ball(this);
-		resetBall(true);
 		
-		lPaddle = new VerticalPaddle(this, field.left, field.verticalCenter);
+		lPaddle = new VerticalPaddle(this, field.left+paddleOffset, field.verticalCenter);
 		lPaddle.setBounds(field.top, field.bottom);
-		rPaddle = new VerticalPaddle(this, field.right, field.verticalCenter);
+		rPaddle = new VerticalPaddle(this, field.right-paddleOffset, field.verticalCenter);
 		rPaddle.setBounds(field.top, field.bottom);
+		
+		resetBall(true);
 		
 		collisionDetections.add(new SimpleCollisionDetection(ball, field, lPaddle, rPaddle));
 		
@@ -72,8 +74,10 @@ public class Pong extends PApplet {
 	}
 	
 	private void resetBall( boolean p1 ){
+		//ball.setLocation( p1 ? field.left + margin*0.5f : field.right - margin*0.5f,
+		//					field.verticalCenter);
 		ball.setLocation( p1 ? field.left + margin*0.5f : field.right - margin*0.5f,
-							field.verticalCenter);
+				p1 ? lPaddle.getPosition() : rPaddle.getPosition());
 		float pi = processing.core.PConstants.PI;
 		ball.heading = p1 ? pi/4.0f : pi-pi/4.0f;
 	}
@@ -157,14 +161,18 @@ public class Pong extends PApplet {
 		if( key == 'b' ){
 			AILevel += 1;
 			if(AILevel > AIs.size() ) AILevel = 0;
-			System.out.println("use AI: " + AIs.get(AILevel-1).getName() );
+			
+			if (AILevel == 0)
+				System.out.println("Use AI: off");
+			else
+				System.out.println("Use AI: " + AIs.get(AILevel-1).getName() );
 		}
 		
 		if( key == 'c' ){
 			cdIndex ++;
 			if(cdIndex >= collisionDetections.size() ) cdIndex = 0;
 			collisionDetections.get(cdIndex).init();
-			System.out.println("use collision detection: "+ collisionDetections.get(cdIndex).getName());
+			System.out.println("Use collision detection: "+ collisionDetections.get(cdIndex).getName());
 		}
 	}
 	

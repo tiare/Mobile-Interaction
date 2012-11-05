@@ -71,4 +71,7 @@ public class VerticalPaddle extends Point2D.Float{
 		return (int)Math.floor(x) + strokeWeight / 2;
 	}
 	
+	public float getPosition() {
+		return y;
+	}
 }
