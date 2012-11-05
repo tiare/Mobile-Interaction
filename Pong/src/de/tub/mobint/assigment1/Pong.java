@@ -25,6 +25,14 @@ public class Pong extends PApplet {
 	int scoreP1;
 	int scoreP2;
 	
+	String displayText = "";
+	int displayTextSize = 15;
+	int[] displayTextColor = {0, 102, 153};
+	int displayTextTimeout = 50;
+	int displayTextCountdown = 0;
+	int displayTextX = 60;
+	int displayTextY = 450;
+	
 	int AILevel = 0;
 	
 	Field field;
@@ -93,6 +101,13 @@ public class Pong extends PApplet {
 		textAlign(CENTER);
 		fill(255);
 		text(scoreP1 + " : " + scoreP2, field.horizontalCenter, scoreSize);
+		
+		//info display
+		textSize(displayTextSize);
+		textAlign(LEFT);
+		fill(displayTextColor[0], displayTextColor[1], displayTextColor[2]);
+		text(displayText, displayTextX, displayTextY);
+		
 		// dashed line
 		for(int i = field.top; i < field.bottom; i=i+20){
 			line(field.horizontalCenter, i, field.horizontalCenter, i+10);
@@ -131,6 +146,11 @@ public class Pong extends PApplet {
 			scoreP2++;
 			resetBall(false);
 		}
+		
+		if (displayTextCountdown > 0)
+			displayTextCountdown--;
+		else
+			displayText = "";
 	}
 	
 	public void keyPressed( ) {
@@ -142,16 +162,28 @@ public class Pong extends PApplet {
 			if( key == 'l' ) rPaddle.setMovement(1);
 		}
 		
-		if( key == '+') ball.velocity += 20.0f;
+		if( key == '+'){ 
+			ball.velocity += 20.0f;
+			displayText = "Ball speed: " + ball.velocity;
+			displayTextCountdown = displayTextTimeout;
+		}
 		if( key == '-'){
 			ball.velocity -= 20.0f;
 			if( ball.velocity < 20.0f) ball.velocity = 20.0f;
+			displayText = "Ball speed: " + ball.velocity;
+			displayTextCountdown = displayTextTimeout;
 		}
 		
-		if( key == '*') fps += 5.0f;
+		if( key == '*') { 
+			fps += 5.0f;
+			displayText = "Fps: " + fps;
+			displayTextCountdown = displayTextTimeout;
+		}
 		if( key == '/'){
 			fps -= 5.0f;
 			if( fps < 1.0f) fps = 1.0f;
+			displayText = "Fps: " + fps;
+			displayTextCountdown = displayTextTimeout;
 		}
 		if(frameRate != fps ){
 			frameRate(fps);
@@ -162,17 +194,25 @@ public class Pong extends PApplet {
 			AILevel += 1;
 			if(AILevel > AIs.size() ) AILevel = 0;
 			
-			if (AILevel == 0)
-				System.out.println("Use AI: off");
-			else
-				System.out.println("Use AI: " + AIs.get(AILevel-1).getName() );
+			if (AILevel == 0) {
+				System.out.println("AI: off");
+				displayText = "AI: off";
+				displayTextCountdown = displayTextTimeout;
+			}
+			else {
+				System.out.println("AI: " + AIs.get(AILevel-1).getName() );
+				displayText = "AI: " + AIs.get(AILevel-1).getName();
+				displayTextCountdown = displayTextTimeout;
+			}
 		}
 		
 		if( key == 'c' ){
 			cdIndex ++;
 			if(cdIndex >= collisionDetections.size() ) cdIndex = 0;
 			collisionDetections.get(cdIndex).init();
-			System.out.println("Use collision detection: "+ collisionDetections.get(cdIndex).getName());
+			System.out.println("Collision detection: "+ collisionDetections.get(cdIndex).getName());
+			displayText = "Collision detection: "+ collisionDetections.get(cdIndex).getName();
+			displayTextCountdown = displayTextTimeout;
 		}
 	}
 	
