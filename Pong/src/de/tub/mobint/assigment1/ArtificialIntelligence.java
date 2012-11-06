@@ -4,13 +4,14 @@ public abstract class ArtificialIntelligence {
 	
 	Ball ball;
 	Field field;
-	VerticalPaddle rPaddle;
+	VerticalPaddle paddle;
+	int smoothingFactor;
 	
 	
-	public ArtificialIntelligence(Ball ball, Field field, VerticalPaddle rPaddle){
+	public ArtificialIntelligence(Ball ball, Field field, VerticalPaddle paddle){
 		this.ball = ball;
 		this.field = field;
-		this.rPaddle = rPaddle;
+		this.paddle = paddle;
 	}
 	
 	public abstract void update(float dT);

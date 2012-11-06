@@ -18,7 +18,7 @@ public class Pong extends PApplet {
 	float fps = 30.0f;
 	
 	int margin = 50;
-	int paddleOffset = 10;
+	int paddleOffset = 0;
 	
 	int scoreSize = 40;
 
@@ -51,7 +51,7 @@ public class Pong extends PApplet {
 		background(0);
 		frameRate(fps);
 		
-		field = new Field(scoreSize + margin/2, height - margin/2, margin, width-margin);
+		field = new Field(scoreSize + margin/2, height - margin/2, margin, width-margin, 0, width);
 		
 		ball = new Ball(this);
 		
@@ -82,12 +82,11 @@ public class Pong extends PApplet {
 	}
 	
 	private void resetBall( boolean p1 ){
-		//ball.setLocation( p1 ? field.left + margin*0.5f : field.right - margin*0.5f,
-		//					field.verticalCenter);
 		ball.setLocation( p1 ? field.left + margin*0.5f : field.right - margin*0.5f,
 				p1 ? lPaddle.getPosition() : rPaddle.getPosition());
 		float pi = processing.core.PConstants.PI;
 		ball.heading = p1 ? pi/4.0f : pi-pi/4.0f;
+		ball.out = false;
 	}
 	
 	private void render(){

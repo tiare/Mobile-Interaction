@@ -16,6 +16,7 @@ public class Ball extends Point2D.Float {
 	int strokeWeight = 10;
 	int color = 255;
 	
+	boolean out = false;
 	float heading;
 	
 	float velocity = 160.0f;

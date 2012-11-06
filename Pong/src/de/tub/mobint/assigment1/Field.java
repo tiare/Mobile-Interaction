@@ -12,11 +12,17 @@ public class Field {
 	int horizontalCenter;
 	int verticalCenter;
 	
-	public Field(int top, int bottom, int left, int right){
+	int screenLeft;
+	int screenRight;
+	
+	public Field(int top, int bottom, int left, int right, int screenLeft, int screenRight){
 		this.top = top;
 		this.bottom = bottom;
 		this.left = left;
 		this.right = right;
+		this.screenLeft = screenLeft;
+		this.screenRight = screenRight;
+		
 		height = bottom - top;
 		width = right - left;
 		horizontalCenter = left + width/2;
