@@ -20,10 +20,8 @@ public class SimpleCollisionDetection extends CollisionDetection{
 				else
 					ball.out = true;
 			}
-			else {
-				if (ball.left() <= field.screenLeft)
+			else if (ball.left() <= field.screenLeft)
 					return -1;
-			}
 		}
 		
 		if( ball.right() > rPaddle.left() ){
@@ -31,10 +29,8 @@ public class SimpleCollisionDetection extends CollisionDetection{
 				if( rPaddle.inRange(ball.y) )	ball.verticalBounce();
 				else ball.out = true;
 			}
-			else {
-				if (ball.right() >= field.screenRight)
+			else if (ball.right() >= field.screenRight)
 					return 1;
-			}
 		}
 		
 		return 0;

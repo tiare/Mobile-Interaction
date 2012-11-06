@@ -74,29 +74,35 @@ public class PreciseCollisionDetection extends CollisionDetection {
 		if( heading == HEADING_BOTTOM || heading == HEADING_TOP) ball.horizontalBounce(); 
 		
 		if( heading == HEADING_LEFT ){
-			if( lPaddle.inRange(ball.y) )	ball.verticalBounce();
-			else {
-				left = Vector3D.crossProduct(new Vector3D(field.left + halfBallWidth, lPaddle.y, 1),
-						new Vector3D(field.left + halfBallWidth, lPaddle.y+1, 1));
-				
-				if (ball.left() <= field.left) { 
-					left = Vector3D.crossProduct( 	new Vector3D(lPaddle.right() + halfBallWidth, lPaddle.y, 1),
-							new Vector3D(lPaddle.right() + halfBallWidth, lPaddle.y+1, 1));
-					return -1;
+			if (!ball.out) {
+				if( lPaddle.inRange(ball.y) )	ball.verticalBounce();
+				else {
+					ball.out = true;
+					left = Vector3D.crossProduct(new Vector3D(field.left + halfBallWidth, lPaddle.y, 1),
+							new Vector3D(field.left + halfBallWidth, lPaddle.y+1, 1));
 				}
 			}
+			else {
+				left = Vector3D.crossProduct( 	new Vector3D(lPaddle.right() + halfBallWidth, lPaddle.y, 1),
+						new Vector3D(lPaddle.right() + halfBallWidth, lPaddle.y+1, 1));
+				if (ball.left() <= field.screenLeft)	return -1;
+			}		
 		}
 		
 		if( heading == HEADING_RIGHT ){
-			if( rPaddle.inRange(ball.y) )	ball.verticalBounce();
-			else { 
-				right = Vector3D.crossProduct( 	new Vector3D(field.right - halfBallWidth, rPaddle.y, 1),
-						new Vector3D(field.right - halfBallWidth, rPaddle.y+1, 1));
-				if (ball.right() >= field.right) {
-					right = Vector3D.crossProduct( 	new Vector3D(rPaddle.left() - halfBallWidth, rPaddle.y, 1),
-							new Vector3D(rPaddle.left() - halfBallWidth, rPaddle.y+1, 1));
-					return 1;
+			if (!ball.out) {
+				if( rPaddle.inRange(ball.y) )	ball.verticalBounce();
+				else { 
+					ball.out = true;
+					right = Vector3D.crossProduct( new Vector3D(field.right - halfBallWidth, rPaddle.y, 1),
+							new Vector3D(field.right - halfBallWidth, rPaddle.y+1, 1));
 				}
+			}
+			else {
+				right = Vector3D.crossProduct( 	new Vector3D(rPaddle.left() - halfBallWidth, rPaddle.y, 1),
+						new Vector3D(rPaddle.left() - halfBallWidth, rPaddle.y+1, 1));
+				
+				if (ball.right() >= field.screenRight)	return 1;
 			}
 		}
 		return 0;
