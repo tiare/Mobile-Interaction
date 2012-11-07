@@ -69,6 +69,7 @@ public class Pong extends PApplet {
 		collisionDetections.add(pcd);
 		
 		AIs.add( new SimpleAI(ball, field, rPaddle));
+		AIs.add( new PerfectAI(ball, field, rPaddle));
 	}
 	
 	public void draw(){
