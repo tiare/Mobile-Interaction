@@ -96,9 +96,9 @@ public class PerfectAI extends ArtificialIntelligence{
 			}
 		}
 		if (heading == HEADING_TOP || heading == HEADING_BOTTOM)
-			fakeBall.horizontalBounce();
+			fakeBall.fakeHorizontalBounce();
 		else
-			fakeBall.verticalBounce();
+			fakeBall.fakeVerticalBounce();
 		
 		fakeBall.x = (float)hitPoint.getX();
 		fakeBall.y = (float)hitPoint.getY();
