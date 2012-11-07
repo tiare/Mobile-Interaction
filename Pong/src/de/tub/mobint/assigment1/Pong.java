@@ -25,16 +25,25 @@ public class Pong extends PApplet {
 	int scoreP1;
 	int scoreP2;
 	
-	String displayText = "";
-	int displayTextSize = 15;
-	int[] displayTextColor = {0, 102, 153};
-	int displayTextTimeout = 50;
-	int displayTextCountdown = 0;
-	int displayTextX = 60;
-	int displayTextY = 450;
+	String infoText = "";
+	int infoTextSize = 15;
+	int[] infoTextColor = {0, 102, 153};
+	int infoTextTimeout = 50;
+	int infoTextCountdown = 0;
+	int infoTextX = 60;
+	int infoTextY = 85;
 	
-	int AILevel = 0;
-	
+	String leftAIText = "";
+	String rightAIText = "";
+	int AITextSize = 15;
+	int[] AITextColor = {52, 190, 68};
+//	int AITextTimeout = 50;
+//	int AITextCountdown = 0;
+	int leftAITextX = 60;
+	int leftAITextY = 445;
+	int rightAITextX = 575;
+	int rightAITextY = 445;
+		
 	Field field;
 	Ball ball;
 	VerticalPaddle lPaddle;
@@ -43,8 +52,13 @@ public class Pong extends PApplet {
 	Vector<CollisionDetection> collisionDetections = new Vector<CollisionDetection>();
 	int cdIndex = 0;
 	
-	Vector<ArtificialIntelligence> AIs = new Vector<ArtificialIntelligence>();
-	int aiIndex = 0;
+	//Store the AIs for the right paddle
+	Vector<ArtificialIntelligence> rightPaddleAIs = new Vector<ArtificialIntelligence>();
+	int rightAILevel = 0;
+	
+	//Store the AIs for the left paddle
+	Vector<ArtificialIntelligence> leftPaddleAIs = new Vector<ArtificialIntelligence>();
+	int leftAILevel = 0;
 	
 	public void setup(){
 		size(width,height,P2D);
@@ -68,8 +82,10 @@ public class Pong extends PApplet {
 		pcd.setPApplet(this);
 		collisionDetections.add(pcd);
 		
-		AIs.add( new SimpleAI(ball, field, rPaddle));
-		AIs.add( new PerfectAI(ball, field, rPaddle));
+		rightPaddleAIs.add( new SimpleAI(ball, field, rPaddle));
+		rightPaddleAIs.add( new PerfectAI(ball, field, rPaddle));
+		leftPaddleAIs.add( new SimpleAI(ball, field, lPaddle));
+		leftPaddleAIs.add( new PerfectAI(ball, field, lPaddle));
 	}
 	
 	public void draw(){
@@ -103,10 +119,22 @@ public class Pong extends PApplet {
 		text(scoreP1 + " : " + scoreP2, field.horizontalCenter, scoreSize);
 		
 		//info display
-		textSize(displayTextSize);
+		textSize(infoTextSize);
 		textAlign(LEFT);
-		fill(displayTextColor[0], displayTextColor[1], displayTextColor[2]);
-		text(displayText, displayTextX, displayTextY);
+		fill(infoTextColor[0], infoTextColor[1], infoTextColor[2]);
+		text(infoText, infoTextX, infoTextY);
+		
+		//left AI display
+		textSize(AITextSize);
+		textAlign(LEFT);
+		fill(AITextColor[0], AITextColor[1], AITextColor[2]);
+		text(leftAIText, leftAITextX, leftAITextY);
+		
+		//right AI display
+		textSize(AITextSize);
+		textAlign(RIGHT);
+		fill(AITextColor[0], AITextColor[1], AITextColor[2]);
+		text(rightAIText, rightAITextX, rightAITextY);
 		
 		// dashed line
 		for(int i = field.top; i < field.bottom; i=i+20){
@@ -130,10 +158,13 @@ public class Pong extends PApplet {
 	}
 	
 	public void update(float dT){
+		
+		if( leftAILevel != 0)
+			leftPaddleAIs.get(leftAILevel-1).update(dT);
 		lPaddle.update(dT);
-		if( AILevel != 0){
-			AIs.get(AILevel-1).update(dT);
-		}
+		
+		if( rightAILevel != 0)
+			rightPaddleAIs.get(rightAILevel-1).update(dT);
 		rPaddle.update(dT);
 		
 		
@@ -147,80 +178,108 @@ public class Pong extends PApplet {
 			resetBall(false);
 		}
 		
-		if (displayTextCountdown > 0)
-			displayTextCountdown--;
+		if (infoTextCountdown > 0)
+			infoTextCountdown--;
 		else
-			displayText = "";
+			infoText = "";
 	}
 	
 	public void keyPressed( ) {
-		if( key == 'q' ) lPaddle.setMovement(-1);
-		if( key == 'a' ) lPaddle.setMovement(1);
+		//Move left paddle
+		if(leftAILevel == 0){
+			if( key == 'q' ) lPaddle.setMovement(-1);
+			if( key == 'a' ) lPaddle.setMovement(1);
+		}
 		
-		if(AILevel == 0){
+		//Move right paddle
+		if(rightAILevel == 0){
 			if( key == 'o' ) rPaddle.setMovement(-1);
 			if( key == 'l' ) rPaddle.setMovement(1);
 		}
 		
+		//Increase ball speed
 		if( key == '+'){ 
 			ball.velocity += 20.0f;
-			displayText = "Ball speed: " + ball.velocity;
-			displayTextCountdown = displayTextTimeout;
+			infoText = "Ball speed: " + ball.velocity;
+			infoTextCountdown = infoTextTimeout;
 		}
+		//Decrease ball speed
 		if( key == '-'){
 			ball.velocity -= 20.0f;
 			if( ball.velocity < 20.0f) ball.velocity = 20.0f;
-			displayText = "Ball speed: " + ball.velocity;
-			displayTextCountdown = displayTextTimeout;
+			infoText = "Ball speed: " + ball.velocity;
+			infoTextCountdown = infoTextTimeout;
 		}
 		
+		//Increase framerate
 		if( key == '*') { 
 			fps += 5.0f;
-			displayText = "Fps: " + fps;
-			displayTextCountdown = displayTextTimeout;
+			infoText = "Fps: " + fps;
+			infoTextCountdown = infoTextTimeout;
 		}
+		//Decrease framerate
 		if( key == '/'){
 			fps -= 5.0f;
 			if( fps < 1.0f) fps = 1.0f;
-			displayText = "Fps: " + fps;
-			displayTextCountdown = displayTextTimeout;
+			infoText = "Fps: " + fps;
+			infoTextCountdown = infoTextTimeout;
 		}
 		if(frameRate != fps ){
 			frameRate(fps);
 		}
 		
-		
-		if( key == 'b' ){
-			AILevel += 1;
-			if(AILevel > AIs.size() ) AILevel = 0;
+		//AI for left paddle
+		if( key == 'v' ){
+			leftAILevel += 1;
+			if(leftAILevel > leftPaddleAIs.size() ) leftAILevel = 0;
 			
-			if (AILevel == 0) {
+			if (leftAILevel == 0) {
 				System.out.println("AI: off");
-				displayText = "AI: off";
-				displayTextCountdown = displayTextTimeout;
+				leftAIText = "AI: off";
+//				AITextCountdown = AITextTimeout;
 			}
 			else {
-				System.out.println("AI: " + AIs.get(AILevel-1).getName() );
-				displayText = "AI: " + AIs.get(AILevel-1).getName();
-				displayTextCountdown = displayTextTimeout;
+				System.out.println("AI: " + leftPaddleAIs.get(leftAILevel-1).getName() );
+				leftAIText = "AI: " + leftPaddleAIs.get(leftAILevel-1).getName();
+//				AITextCountdown = AITextTimeout;
 			}
 		}
 		
+		//AI for right paddle
+		if( key == 'b' ){
+			rightAILevel += 1;
+			if(rightAILevel > rightPaddleAIs.size() ) rightAILevel = 0;
+			
+			if (rightAILevel == 0) {
+				System.out.println("AI: off");
+				rightAIText = "AI: off";
+//				AITextCountdown = AITextTimeout;
+			}
+			else {
+				System.out.println("AI: " + rightPaddleAIs.get(rightAILevel-1).getName() );
+				rightAIText = "AI: " + rightPaddleAIs.get(rightAILevel-1).getName();
+//				AITextCountdown = AITextTimeout;
+			}
+		}
+		
+		//Select type of collision detection
 		if( key == 'c' ){
 			cdIndex ++;
 			if(cdIndex >= collisionDetections.size() ) cdIndex = 0;
 			collisionDetections.get(cdIndex).init();
 			System.out.println("Collision detection: "+ collisionDetections.get(cdIndex).getName());
-			displayText = "Collision detection: "+ collisionDetections.get(cdIndex).getName();
-			displayTextCountdown = displayTextTimeout;
+			infoText = "Collision detection: "+ collisionDetections.get(cdIndex).getName();
+			infoTextCountdown = infoTextTimeout;
 		}
 	}
 	
 	public void keyReleased( ) {
-		if( key == 'q' && lPaddle.movement == -1) lPaddle.setMovement(0);
-		if( key == 'a' && lPaddle.movement == 1) lPaddle.setMovement(0);
+		if(leftAILevel == 0){
+			if( key == 'q' && lPaddle.movement == -1) lPaddle.setMovement(0);
+			if( key == 'a' && lPaddle.movement == 1) lPaddle.setMovement(0);
+		}
 		
-		if(AILevel == 0){
+		if(rightAILevel == 0){
 			if( key == 'o' && rPaddle.movement == -1) rPaddle.setMovement(0);
 			if( key == 'l' && rPaddle.movement == 1) rPaddle.setMovement(0);
 		}

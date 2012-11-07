@@ -103,7 +103,10 @@ public class PerfectAI extends ArtificialIntelligence{
 		fakeBall.x = (float)hitPoint.getX();
 		fakeBall.y = (float)hitPoint.getY();
 		
-		if(fakeBall.x >= ownPaddle.x - halfBallWidth - 0.01) //TODO: check for left side
+		if((ownPaddle.x < field.horizontalCenter && //left paddle and
+				fakeBall.x <= ownPaddle.x + halfBallWidth + 0.01) //ball needs to be stopped.
+				|| (ownPaddle.x > field.horizontalCenter && //right paddle and
+						fakeBall.x >= ownPaddle.x - halfBallWidth - 0.01)) //ball needs to be stopped.
 			requiredPaddlePos.setLocation(fakeBall.x,fakeBall.y);
 		else detectNextCollision();
 	}
