@@ -14,7 +14,7 @@ public class Pong extends PApplet {
 	int width = 640;
 	int height = 480;
 	
-	float ballStartVelocity = 160.0f; // px/s
+	float ballVelocity; // px/s
 	float fps = 30.0f;
 	
 	int margin = 50;
@@ -68,6 +68,7 @@ public class Pong extends PApplet {
 		field = new Field(scoreSize + margin/2, height - margin/2, margin, width-margin, 0, width);
 		
 		ball = new Ball(this);
+		ballVelocity = ball.velocity;
 		
 		lPaddle = new VerticalPaddle(this, field.left+paddleOffset, field.verticalCenter);
 		lPaddle.setBounds(field.top, field.bottom);
@@ -91,6 +92,12 @@ public class Pong extends PApplet {
 	public void draw(){
 		float dT = 1.0f / frameRate;
 		//processInputs(); // user inputs
+		
+		if(ballVelocity != ball.velocity){
+			ball.velocity = ballVelocity;
+			collisionDetections.get(cdIndex).init();
+		}
+		
 		update(dT); // move objects
 		
 		
@@ -199,15 +206,15 @@ public class Pong extends PApplet {
 		
 		//Increase ball speed
 		if( key == '+'){ 
-			ball.velocity += 20.0f;
-			infoText = "Ball speed: " + ball.velocity;
+			ballVelocity += 20.0f;
+			infoText = "Ball speed: " + ballVelocity;
 			infoTextCountdown = infoTextTimeout;
 		}
 		//Decrease ball speed
 		if( key == '-'){
-			ball.velocity -= 20.0f;
-			if( ball.velocity < 20.0f) ball.velocity = 20.0f;
-			infoText = "Ball speed: " + ball.velocity;
+			ballVelocity -= 20.0f;
+			if( ballVelocity < 20.0f) ballVelocity = 20.0f;
+			infoText = "Ball speed: " + ballVelocity;
 			infoTextCountdown = infoTextTimeout;
 		}
 		
