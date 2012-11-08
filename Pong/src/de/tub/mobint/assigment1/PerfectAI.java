@@ -1,6 +1,7 @@
 package de.tub.mobint.assigment1;
 
 import java.awt.geom.Point2D;
+import java.util.LinkedList;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
@@ -46,13 +47,14 @@ public class PerfectAI extends ArtificialIntelligence{
 		remainingTime = Float.MAX_VALUE;
 		smoothingFactor = 10;
 		fakeBall = (Ball) ball.clone();
+		fakeBall.lastBounces = new LinkedList<Point2D.Float>();
 		hitPoint = new Point2D.Float(0,0);
 		requiredPaddlePos = new Point2D.Float(ownPaddle.x, ownPaddle.y);
 	}
 
 	@Override
 	public void update(float dT) {
-		//fakeBall.draw();
+//		fakeBall.draw();
 		fakeBall.setLocation(ball);
 		fakeBall.heading = ball.heading;
 		//Find the goal position to deflect ball
@@ -96,9 +98,9 @@ public class PerfectAI extends ArtificialIntelligence{
 			}
 		}
 		if (heading == HEADING_TOP || heading == HEADING_BOTTOM)
-			fakeBall.fakeHorizontalBounce();
+			fakeBall.horizontalBounce();
 		else
-			fakeBall.fakeVerticalBounce();
+			fakeBall.verticalBounce();
 		
 		fakeBall.x = (float)hitPoint.getX();
 		fakeBall.y = (float)hitPoint.getY();

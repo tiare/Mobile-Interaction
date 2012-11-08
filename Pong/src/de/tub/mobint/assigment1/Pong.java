@@ -153,7 +153,7 @@ public class Pong extends PApplet {
 		rect(field.right,field.top, width, field.height);
 		strokeWeight(1);
 		stroke(99);
-		line(0,field.top,width,field.top);
+		line(0,field.top-1,width,field.top-1);
 		line(0,field.bottom,width,field.bottom);
 		
 		// draw Paddels
@@ -241,6 +241,7 @@ public class Pong extends PApplet {
 			if(leftAILevel > leftPaddleAIs.size() ) leftAILevel = 0;
 			
 			if (leftAILevel == 0) {
+				lPaddle.movement = 0;
 				System.out.println("AI: off");
 				leftAIText = "AI: off";
 //				AITextCountdown = AITextTimeout;
@@ -258,6 +259,7 @@ public class Pong extends PApplet {
 			if(rightAILevel > rightPaddleAIs.size() ) rightAILevel = 0;
 			
 			if (rightAILevel == 0) {
+				rPaddle.movement = 0;
 				System.out.println("AI: off");
 				rightAIText = "AI: off";
 //				AITextCountdown = AITextTimeout;

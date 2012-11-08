@@ -100,13 +100,4 @@ public class Ball extends Point2D.Float {
 		if( lastBounces.size() > bounceAmount ) lastBounces.removeLast();
 	}
 	
-	public void fakeHorizontalBounce(){
-		heading *= -1;		
-	}
-	
-	public void fakeVerticalBounce(){
-		heading = -(heading - processing.core.PConstants.PI/2.0f)
-				+ processing.core.PConstants.PI/2.0f;
-	}
-	
 }

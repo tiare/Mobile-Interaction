@@ -78,14 +78,14 @@ public class PreciseCollisionDetection extends CollisionDetection {
 				if( lPaddle.inRange(ball.y) )	ball.verticalBounce();
 				else {
 					ball.out = true;
-					left = Vector3D.crossProduct(new Vector3D(field.left + halfBallWidth, lPaddle.y, 1),
-							new Vector3D(field.left + halfBallWidth, lPaddle.y+1, 1));
+					left = Vector3D.crossProduct(new Vector3D(field.screenLeft + halfBallWidth, lPaddle.y, 1),
+							new Vector3D(field.screenLeft + halfBallWidth, lPaddle.y+1, 1));
 				}
 			}
 			else {
 				left = Vector3D.crossProduct( 	new Vector3D(lPaddle.right() + halfBallWidth, lPaddle.y, 1),
 						new Vector3D(lPaddle.right() + halfBallWidth, lPaddle.y+1, 1));
-				if (ball.left() <= field.screenLeft)	return -1;
+				return -1;
 			}		
 		}
 		
@@ -94,15 +94,15 @@ public class PreciseCollisionDetection extends CollisionDetection {
 				if( rPaddle.inRange(ball.y) )	ball.verticalBounce();
 				else { 
 					ball.out = true;
-					right = Vector3D.crossProduct( new Vector3D(field.right - halfBallWidth, rPaddle.y, 1),
-							new Vector3D(field.right - halfBallWidth, rPaddle.y+1, 1));
+					right = Vector3D.crossProduct( new Vector3D(field.screenRight - halfBallWidth, rPaddle.y, 1),
+							new Vector3D(field.screenRight - halfBallWidth, rPaddle.y+1, 1));
 				}
 			}
 			else {
 				right = Vector3D.crossProduct( 	new Vector3D(rPaddle.left() - halfBallWidth, rPaddle.y, 1),
 						new Vector3D(rPaddle.left() - halfBallWidth, rPaddle.y+1, 1));
 				
-				if (ball.right() >= field.screenRight)	return 1;
+				return 1;
 			}
 		}
 		return 0;
@@ -129,8 +129,8 @@ public class PreciseCollisionDetection extends CollisionDetection {
 			}
 		}
 		
-		if( positiveY ){
-			if( acceptIfCloser(path, bottom) ){
+		if( positiveY ){ //  && !(ball.x < field.screenLeft || ball.x > field.screenRight) ){
+			if( acceptIfCloser(path, bottom)){
 				heading = HEADING_BOTTOM;
 			}
 		} else {
