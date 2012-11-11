@@ -31,7 +31,7 @@ public class Pong extends PApplet {
 	int infoTextTimeout = 50;
 	int infoTextCountdown = 0;
 	int infoTextX = 60;
-	int infoTextY = 85;
+	int infoTextY = 60;
 	
 	String leftAIText = "";
 	String rightAIText = "";
@@ -40,9 +40,9 @@ public class Pong extends PApplet {
 //	int AITextTimeout = 50;
 //	int AITextCountdown = 0;
 	int leftAITextX = 60;
-	int leftAITextY = 445;
+	int leftAITextY = 470;
 	int rightAITextX = 575;
-	int rightAITextY = 445;
+	int rightAITextY = 470;
 		
 	Field field;
 	Ball ball;
