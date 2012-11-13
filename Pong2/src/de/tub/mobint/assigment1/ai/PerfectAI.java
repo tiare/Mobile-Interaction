@@ -9,7 +9,6 @@ import de.tub.mobint.assigment1.Ball;
 import de.tub.mobint.assigment1.Field;
 import de.tub.mobint.assigment1.paddle.Paddle;
 import de.tub.mobint.assigment1.paddle.PaddleController;
-import de.tub.mobint.assigment1.paddle.VerticalPaddle;
 
 public class PerfectAI extends ArtificialIntelligence implements PaddleController{
 
@@ -128,52 +127,6 @@ public class PerfectAI extends ArtificialIntelligence implements PaddleControlle
 		
 		requiredPaddlePos.setLocation(fakeBall.x,fakeBall.y);
 		
-		/*
-		
-		if(ball.out) return;
-		remainingTime = Float.MAX_VALUE;
-		
-		boolean positiveX = Math.cos(fakeBall.heading) > 0;
-		boolean positiveY = Math.sin(fakeBall.heading) > 0;
-		
-		Vector3D path = Vector3D.crossProduct(	new Vector3D(fakeBall.x, fakeBall.y, 1),
-						new Vector3D(fakeBall.x + Math.cos(fakeBall.heading),
-								fakeBall.y + Math.sin(fakeBall.heading),
-									1) );
-		
-		if( positiveX ){
-			if( acceptIfCloser(path, right) ){
-				heading = HEADING_RIGHT;
-			}
-		} else {
-			if( acceptIfCloser(path, left) ){
-				heading = HEADING_LEFT;
-			}
-		}
-		
-		if( positiveY ){
-			if( acceptIfCloser(path, bottom) ){
-				heading = HEADING_BOTTOM;
-			}
-		} else {
-			if( acceptIfCloser(path, top) ){
-				heading = HEADING_TOP;
-			}
-		}
-		if (heading == HEADING_TOP || heading == HEADING_BOTTOM)
-			fakeBall.horizontalBounce();
-		else
-			fakeBall.verticalBounce();
-		
-		fakeBall.x = (float)hitPoint.getX();
-		fakeBall.y = (float)hitPoint.getY();
-		
-		if((ownPaddle.x < field.horizontalCenter && //left paddle and
-				fakeBall.x <= ownPaddle.x + halfBallWidth + 0.01) //ball needs to be stopped.
-				|| (ownPaddle.x > field.horizontalCenter && //right paddle and
-						fakeBall.x >= ownPaddle.x - halfBallWidth - 0.01)) //ball needs to be stopped.
-			requiredPaddlePos.setLocation(fakeBall.x,fakeBall.y);
-		else detectNextCollision();*/
 	}
 	
 	private boolean acceptIfCloser(Vector3D path, Vector3D bound){
