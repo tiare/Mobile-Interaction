@@ -1,0 +1,24 @@
+﻿Tiare Feuchtner (343302)
+Marcel Karsten (343619)
+
+
+Kollisionserkennung
+-------------------
+Zur Implementierung der Kollisionserkennung wurde auf homogene Koordinaten zurückgegriffen. Mit ihnen ist es möglich sowohl Punkte als auch Geraden jeweils als Vektor zu repräsentieren.
+Diese lassen sich mit dem Kreuzprodukt in die jeweils andere Form umwandeln. Das Kreuzprodukt zweier Punkte ergibt die verbindende Gerade. Andersherum führt das Kreuzprodukt zweier Geraden zum Schnittpunkt dieser beiden. Die mathematischen Grundlagen wurden im Kurs Photogrammetric Computer Vision gesammelt.
+
+Ablauf im Programm
+Für die Berechnung der Kollisionen werden die Spielfeldbegrenzungen und die Bahn des Balls als Geraden in Form von homogenen Koordinaten gespeichert. Nach dem Start wird nun in Bewegungsrichtung der Schnittpunkt mit der geringsten Entfernung ermittelt. Da die Geschwindigkeit des Balls bekannt ist, kann die Zeit bis zur Kollision ermittelt werden.
+Bleibt genug Zeit um den nächsten Updateintervall ohne Kollision durchzuführen, geschieht dies.
+Andernfalls wird der Ball bis zur Kollision bewegt, die Bewegungsrichtung an der Oberfläche gespiegelt und die nächste Kollision berechnet. Dies wird so lange wiederholt bis die Updatezeit überschritten wird. Damit sind auch mehrere Kollisionen je Updateintervall möglich.
+
+
+Optionale Features
+- Scoreboard
+- 2 Arten KI, können unabhängig für beide Paddles eingestellt werden, so dass man die KIs auch gegeneinander spielen lassen kann.
+	(v für linkes Paddle, b für rechtes Paddle)
+	- Simple: Paddle versucht sich auf der Höhe des Balls zu halten
+	- Perfect: Vorausberechnung des Ballpfads
+- Infotextanzeige für KI-Art, Ballgeschwindigkeit, Framerate und Art der Kollisionserkennung  
+- Anzeige der Kollisionspunkte
+- Angedeutete Bewegungsunschärfe beim Ball
