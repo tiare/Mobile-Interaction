@@ -22,5 +22,9 @@ public class MousePaddleController implements PaddleController {
 		this.x = x;
 		this.y = y;
 	}
-	
+
+	@Override
+	public String getName() {
+		return "MousePaddleController";
+	}
 }

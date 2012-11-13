@@ -3,6 +3,8 @@ package de.tub.mobint.assigment1;
 import java.util.Vector;
 
 import de.tub.mobint.assigment1.ai.ArtificialIntelligence;
+import de.tub.mobint.assigment1.ai.PerfectAI;
+import de.tub.mobint.assigment1.ai.SimpleAI;
 //import de.tub.mobint.assigment1.ai.PerfectAI;
 //import de.tub.mobint.assigment1.ai.SimpleAI;
 import de.tub.mobint.assigment1.collision.CollisionDetection;
@@ -11,8 +13,7 @@ import de.tub.mobint.assigment1.paddle.KeyPaddleController;
 import de.tub.mobint.assigment1.paddle.MousePaddleController;
 import de.tub.mobint.assigment1.paddle.Paddle;
 import de.tub.mobint.assigment1.paddle.PaddleController;
-import de.tub.mobint.assigment1.paddle.SimpleAIPaddleController;
-import de.tub.mobint.assigment1.paddle.VerticalPaddle;
+import de.tub.mobint.assigment1.paddle.AIPaddleController;
 
 import processing.core.*;
 
@@ -65,7 +66,8 @@ public class Pong extends PApplet {
 	KeyPaddleController leftKeyPC;
 	KeyPaddleController rightKeyPC;
 	
-	SimpleAIPaddleController rightSimpleAIPC;
+	AIPaddleController rightSimpleAIPC;
+	AIPaddleController rightStrongAIPC;
 	
 	PaddleController activeLeftPC;
 	PaddleController activeRightPC;
@@ -94,11 +96,6 @@ public class Pong extends PApplet {
 		lPaddle = new Paddle(this, field.left+paddleOffset, field.verticalCenter, field.getLeftArea(ball.strokeWeight));
 		rPaddle = new Paddle(this, field.right-paddleOffset, field.verticalCenter, field.getRightArea(ball.strokeWeight));
 		
-		//lPaddle = new VerticalPaddle(this, field.left+paddleOffset, field.verticalCenter);
-		//lPaddle.setBounds(field.top, field.bottom);
-		//rPaddle = new VerticalPaddle(this, field.right-paddleOffset, field.verticalCenter);
-		//rPaddle.setBounds(field.top, field.bottom);
-		
 		resetBall(false);
 		
 		//collisionDetections.add(new SimpleCollisionDetection(ball, field, lPaddle, rPaddle));
@@ -111,10 +108,11 @@ public class Pong extends PApplet {
 		leftKeyPC = new KeyPaddleController(lPaddle);
 		rightKeyPC = new KeyPaddleController(rPaddle);
 		
-		rightSimpleAIPC = new SimpleAIPaddleController(rPaddle, ball);
+		rightSimpleAIPC = new AIPaddleController(rPaddle, new SimpleAI(ball, field, rPaddle));
+		rightStrongAIPC = new AIPaddleController(rPaddle, new PerfectAI(ball, field, rPaddle, lPaddle));
 		
 		activeLeftPC = mousePC;
-		activeRightPC = rightSimpleAIPC;
+		activeRightPC = rightStrongAIPC;
 		/*
 		rightPaddleAIs.add( new SimpleAI(ball, field, rPaddle));
 		rightPaddleAIs.add( new PerfectAI(ball, field, rPaddle));

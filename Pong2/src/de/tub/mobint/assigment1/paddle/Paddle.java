@@ -53,12 +53,12 @@ public class Paddle extends Point2D.Float{
 		return distance(possibleHit) <= halfSize;
 	}
 	
-	public Vector3D getLine(float offset){
-		
+	public Vector3D getLine(float externalOffset){
+		float offset = externalOffset;
 		// add own offset
-		if( offset != 0.0f){
-			if( offset > 0.0f )	offset += strokeWeight * 0.5f;
-			else				offset -= strokeWeight * 0.5f;
+		if( externalOffset != 0.0f){
+			if( externalOffset > 0.0f )	offset += strokeWeight * 0.5f;
+			else						offset -= strokeWeight * 0.5f;
 		}
 		return Vector3D.crossProduct(	new Vector3D(x + offset, y, 1),
 										new Vector3D(x + offset, y+halfSize, 1));

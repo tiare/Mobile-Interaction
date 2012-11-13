@@ -27,4 +27,8 @@ public class KeyPaddleController implements PaddleController {
 		movement = move;
 	}
 
+	@Override
+	public String getName() {
+		return "Key controlled paddle";
+	}
 }
