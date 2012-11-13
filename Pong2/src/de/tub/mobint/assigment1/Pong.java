@@ -11,6 +11,7 @@ import de.tub.mobint.assigment1.paddle.KeyPaddleController;
 import de.tub.mobint.assigment1.paddle.MousePaddleController;
 import de.tub.mobint.assigment1.paddle.Paddle;
 import de.tub.mobint.assigment1.paddle.PaddleController;
+import de.tub.mobint.assigment1.paddle.SimpleAIPaddleController;
 import de.tub.mobint.assigment1.paddle.VerticalPaddle;
 
 import processing.core.*;
@@ -64,6 +65,8 @@ public class Pong extends PApplet {
 	KeyPaddleController leftKeyPC;
 	KeyPaddleController rightKeyPC;
 	
+	SimpleAIPaddleController rightSimpleAIPC;
+	
 	PaddleController activeLeftPC;
 	PaddleController activeRightPC;
 	
@@ -108,8 +111,10 @@ public class Pong extends PApplet {
 		leftKeyPC = new KeyPaddleController(lPaddle);
 		rightKeyPC = new KeyPaddleController(rPaddle);
 		
+		rightSimpleAIPC = new SimpleAIPaddleController(rPaddle, ball);
+		
 		activeLeftPC = mousePC;
-		activeRightPC = rightKeyPC;
+		activeRightPC = rightSimpleAIPC;
 		/*
 		rightPaddleAIs.add( new SimpleAI(ball, field, rPaddle));
 		rightPaddleAIs.add( new PerfectAI(ball, field, rPaddle));
