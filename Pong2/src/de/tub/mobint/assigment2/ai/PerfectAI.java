@@ -1,14 +1,14 @@
-package de.tub.mobint.assigment1.ai;
+package de.tub.mobint.assigment2.ai;
 
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
-import de.tub.mobint.assigment1.Ball;
-import de.tub.mobint.assigment1.Field;
-import de.tub.mobint.assigment1.paddle.Paddle;
-import de.tub.mobint.assigment1.paddle.PaddleController;
+import de.tub.mobint.assigment2.Ball;
+import de.tub.mobint.assigment2.Field;
+import de.tub.mobint.assigment2.paddle.Paddle;
+import de.tub.mobint.assigment2.paddle.PaddleController;
 
 public class PerfectAI extends ArtificialIntelligence implements PaddleController{
 

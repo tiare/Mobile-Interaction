@@ -1,4 +1,4 @@
-package de.tub.mobint.assigment1;
+package de.tub.mobint.assigment2;
 
 public class Field extends Area{
 	

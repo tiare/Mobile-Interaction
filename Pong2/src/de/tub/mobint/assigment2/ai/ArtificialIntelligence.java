@@ -1,10 +1,10 @@
-package de.tub.mobint.assigment1.ai;
+package de.tub.mobint.assigment2.ai;
 
-import de.tub.mobint.assigment1.Ball;
-import de.tub.mobint.assigment1.Field;
-import de.tub.mobint.assigment1.paddle.KeyPaddleController;
-import de.tub.mobint.assigment1.paddle.Paddle;
-import de.tub.mobint.assigment1.paddle.PaddleController;
+import de.tub.mobint.assigment2.Ball;
+import de.tub.mobint.assigment2.Field;
+import de.tub.mobint.assigment2.paddle.KeyPaddleController;
+import de.tub.mobint.assigment2.paddle.Paddle;
+import de.tub.mobint.assigment2.paddle.PaddleController;
 
 public abstract class ArtificialIntelligence {
 	

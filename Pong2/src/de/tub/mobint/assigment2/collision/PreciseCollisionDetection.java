@@ -1,12 +1,12 @@
-package de.tub.mobint.assigment1.collision;
+package de.tub.mobint.assigment2.collision;
 
 import java.awt.geom.Point2D;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
-import de.tub.mobint.assigment1.Ball;
-import de.tub.mobint.assigment1.Field;
-import de.tub.mobint.assigment1.paddle.Paddle;
+import de.tub.mobint.assigment2.Ball;
+import de.tub.mobint.assigment2.Field;
+import de.tub.mobint.assigment2.paddle.Paddle;
 
 import processing.core.PApplet;
 

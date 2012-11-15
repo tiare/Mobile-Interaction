@@ -1,6 +1,6 @@
-package de.tub.mobint.assigment1.paddle;
+package de.tub.mobint.assigment2.paddle;
 
-import de.tub.mobint.assigment1.ai.ArtificialIntelligence;
+import de.tub.mobint.assigment2.ai.ArtificialIntelligence;
 
 public class AIPaddleController extends KeyPaddleController {
 

@@ -1,4 +1,4 @@
-package de.tub.mobint.assigment1.paddle;
+package de.tub.mobint.assigment2.paddle;
 
 public interface PaddleController {
 

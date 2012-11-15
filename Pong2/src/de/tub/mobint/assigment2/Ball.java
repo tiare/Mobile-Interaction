@@ -1,4 +1,4 @@
-package de.tub.mobint.assigment1;
+package de.tub.mobint.assigment2;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
 

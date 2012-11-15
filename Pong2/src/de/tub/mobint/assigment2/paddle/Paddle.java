@@ -1,10 +1,10 @@
-package de.tub.mobint.assigment1.paddle;
+package de.tub.mobint.assigment2.paddle;
 
 import java.awt.geom.Point2D;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
-import de.tub.mobint.assigment1.Area;
+import de.tub.mobint.assigment2.Area;
 
 import processing.core.PApplet;
 
@@ -22,10 +22,18 @@ public class Paddle extends Point2D.Float{
 	
 	float heading = 0;
 	
+	public static final int LEFT_SIDE = 1;
+	public static final int RIGHT_SIDE = 2;
+	
+	int side;
+	
 	public Paddle(PApplet p, float x, float y, Area bounds){
 		super( x, y);
 		parent = p; 
 		this.bounds = bounds;
+		// dirty, change maybe later
+		if( x < 320 ) side = LEFT_SIDE;
+		else side = RIGHT_SIDE;
 	}
 	
 	
