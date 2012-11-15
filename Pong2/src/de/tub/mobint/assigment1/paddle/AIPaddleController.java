@@ -5,7 +5,6 @@ import de.tub.mobint.assigment1.ai.ArtificialIntelligence;
 public class AIPaddleController extends KeyPaddleController {
 
 	ArtificialIntelligence ai;
-	int smoothingFactor;
 	
 	public AIPaddleController(Paddle paddle, ArtificialIntelligence ai) {
 		super(paddle);

@@ -5,10 +5,9 @@ import java.util.Vector;
 import de.tub.mobint.assigment1.ai.ArtificialIntelligence;
 import de.tub.mobint.assigment1.ai.PerfectAI;
 import de.tub.mobint.assigment1.ai.SimpleAI;
-//import de.tub.mobint.assigment1.ai.PerfectAI;
-//import de.tub.mobint.assigment1.ai.SimpleAI;
 import de.tub.mobint.assigment1.collision.CollisionDetection;
 import de.tub.mobint.assigment1.collision.PreciseCollisionDetection;
+import de.tub.mobint.assigment1.paddle.HandPaddleController;
 import de.tub.mobint.assigment1.paddle.KeyPaddleController;
 import de.tub.mobint.assigment1.paddle.MousePaddleController;
 import de.tub.mobint.assigment1.paddle.Paddle;
@@ -17,8 +16,12 @@ import de.tub.mobint.assigment1.paddle.AIPaddleController;
 
 import processing.core.*;
 
+import SimpleOpenNI.*;
+
 public class Pong extends PApplet {
 
+	private SimpleOpenNI context;
+	
 	/**
 	 * @author Marcel Karsten (343619), Tiare Feuchtner (343...)
 	 */
@@ -72,6 +75,8 @@ public class Pong extends PApplet {
 	PaddleController activeLeftPC;
 	PaddleController activeRightPC;
 	
+	HandPaddleController leftHandPC;
+	
 	Vector<CollisionDetection> collisionDetections = new Vector<CollisionDetection>();
 	int cdIndex = 0;
 	
@@ -87,6 +92,14 @@ public class Pong extends PApplet {
 		size(width,height,P2D);
 		background(0);
 		frameRate(fps);
+		
+		// OpenNI stuff
+		
+		//context = new SimpleOpenNI(this, SimpleOpenNI.RUN_MODE_MULTI_THREADED);
+		context = new SimpleOpenNI(this, SimpleOpenNI.RUN_MODE_SINGLE_THREADED);
+		context.enableDepth();
+		context.enableUser(SimpleOpenNI.SKEL_PROFILE_ALL);
+		
 		
 		field = new Field(scoreSize + margin/2, height - margin/2, margin, width-margin, 0, width);
 		
@@ -113,17 +126,16 @@ public class Pong extends PApplet {
 		
 		activeLeftPC = mousePC;
 		activeRightPC = rightStrongAIPC;
-		/*
-		rightPaddleAIs.add( new SimpleAI(ball, field, rPaddle));
-		rightPaddleAIs.add( new PerfectAI(ball, field, rPaddle));
-		leftPaddleAIs.add( new SimpleAI(ball, field, lPaddle));
-		leftPaddleAIs.add( new PerfectAI(ball, field, lPaddle));
-		*/
+		
+		leftHandPC = new HandPaddleController(lPaddle, context);
+
 	}
 	
 	public void draw(){
 		float dT = 1.0f / frameRate;
 		//processInputs(); // user inputs
+		
+		context.update();
 		
 		if(ballVelocity != ball.velocity){
 			ball.velocity = ballVelocity;
@@ -148,6 +160,9 @@ public class Pong extends PApplet {
 	private void render(){
 		//clear bg
 		background(0);
+		
+		image(context.depthImage(), 0, 0);
+		
 		
 		//Draw field and score
 		stroke(255);
@@ -339,11 +354,27 @@ public class Pong extends PApplet {
 		mousePC.setMousePosition(mouseX, mouseY);
 	}
 	
+	public void onNewUser(int userId){
+		System.out.println("new user: " + userId);
+		context.requestCalibrationSkeleton(userId, true);
+	}
+	
+	public void onLostUser(int userId){
+		System.out.println("lost user: " + userId);
+		activeLeftPC = leftKeyPC;
+	}
+	
+	public void onEndCalibration( int userId, boolean successfull){
+		System.out.println("calibration complete");
+		if(successfull) context.startTrackingSkeleton(userId);
+		activeLeftPC = leftHandPC;
+	}
+
+	
 	public static void main(String args[]) {
 		//PApplet.main(new String[] { "--present", "de.tub.mobint.assigment1.Pong" });
 		PApplet.main(new String[] { "de.tub.mobint.assigment1.Pong" });
 	}
-	
 }
 
 
