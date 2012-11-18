@@ -1,13 +1,14 @@
 package de.tub.mobint.assigment2.paddle;
 
 import de.tub.mobint.assigment2.ai.ArtificialIntelligence;
+import de.tub.mobint.assigment2.gui.icon.Icon;
 
 public class AIPaddleController extends KeyPaddleController {
 
 	ArtificialIntelligence ai;
 	
-	public AIPaddleController(Paddle paddle, ArtificialIntelligence ai) {
-		super(paddle);
+	public AIPaddleController(Paddle paddle, Icon icon, ArtificialIntelligence ai) {
+		super(paddle, icon);
 		this.ai = ai;
 		ai.setKeyPaddleController(this);
 	}

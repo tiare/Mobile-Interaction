@@ -1,35 +1,39 @@
 package de.tub.mobint.assigment2.paddle;
 
-import java.awt.geom.Point2D;
+import de.tub.mobint.assigment2.Point2DDepth;
+import de.tub.mobint.assigment2.User;
+import de.tub.mobint.assigment2.gui.LeftHandPositionListener;
+import de.tub.mobint.assigment2.gui.RightHandPositionListener;
+import de.tub.mobint.assigment2.gui.icon.Icon;
 
-import de.tub.mobint.assigment2.OpenNiControlRecognition;
+public class HandPaddleController extends PaddleController implements LeftHandPositionListener, RightHandPositionListener {
 
-public class HandPaddleController implements PaddleController {
-
-	OpenNiControlRecognition context;
-	Paddle paddle;
+	Point2DDepth pos;
 	
-	public HandPaddleController( Paddle paddle, OpenNiControlRecognition context) {
-		this.paddle = paddle;
-		this.context = context;
+	public HandPaddleController( Paddle paddle, Icon icon) {
+		super( paddle, icon);
+		pos = new Point2DDepth(0,0,2);
 	}
-
+	
 	@Override
 	public void update(float dT) {
-		if(context.isTrackingSkeleton(1)){
-			Point2D.Float pos;
-			if( paddle.side == Paddle.LEFT_SIDE)	pos = context.getLeftHandPosition(1);
-			else 									pos = context.getRightHandPosition(2);
-			paddle.updatePosition(pos.x,pos.y);
-			
-		}
+		paddle.updatePosition(pos.x,pos.y);
 
 	}
 
 	@Override
 	public String getName() {
 		
-		return "HandPaddleController";
+		return "Hand";
+	}
+	@Override
+	public void leftHandPositionChanged(User user, Point2DDepth pos) {
+		this.pos = pos;
+	}
+
+	@Override
+	public void rightHandPositionChanged(User user, Point2DDepth pos) {
+		this.pos = pos;
 	}
 
 }

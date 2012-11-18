@@ -1,14 +1,14 @@
 package de.tub.mobint.assigment2.paddle;
 
-public class MousePaddleController implements PaddleController {
+import de.tub.mobint.assigment2.gui.icon.Icon;
 
-	Paddle paddle;
+public class MousePaddleController extends PaddleController {
 	
 	int x;
 	int y;
 	
-	public MousePaddleController(Paddle paddle) {
-		this.paddle = paddle;
+	public MousePaddleController(Paddle paddle, Icon icon) {
+		super(paddle,icon);
 	}
 
 	@Override
@@ -25,6 +25,6 @@ public class MousePaddleController implements PaddleController {
 
 	@Override
 	public String getName() {
-		return "MousePaddleController";
+		return "Mouse";
 	}
 }

@@ -3,9 +3,8 @@ package de.tub.mobint.assigment2.ai;
 import de.tub.mobint.assigment2.Ball;
 import de.tub.mobint.assigment2.Field;
 import de.tub.mobint.assigment2.paddle.Paddle;
-import de.tub.mobint.assigment2.paddle.PaddleController;
 
-public class SimpleAI extends ArtificialIntelligence implements PaddleController{
+public class SimpleAI extends ArtificialIntelligence{
 
 	
 	

@@ -1,12 +1,23 @@
 package de.tub.mobint.assigment2;
 
-import java.util.Vector;
+import java.awt.geom.Point2D;
+import java.util.Arrays;
 
-import de.tub.mobint.assigment2.ai.ArtificialIntelligence;
+import SimpleOpenNI.SimpleOpenNI;
+
 import de.tub.mobint.assigment2.ai.PerfectAI;
 import de.tub.mobint.assigment2.ai.SimpleAI;
 import de.tub.mobint.assigment2.collision.CollisionDetection;
 import de.tub.mobint.assigment2.collision.PreciseCollisionDetection;
+import de.tub.mobint.assigment2.gui.HandMarker;
+import de.tub.mobint.assigment2.gui.InfoText;
+import de.tub.mobint.assigment2.gui.RingButton;
+import de.tub.mobint.assigment2.gui.icon.AiIcon;
+import de.tub.mobint.assigment2.gui.icon.BallFastIcon;
+import de.tub.mobint.assigment2.gui.icon.BallSlowIcon;
+import de.tub.mobint.assigment2.gui.icon.HandIcon;
+import de.tub.mobint.assigment2.gui.icon.KeyIcon;
+import de.tub.mobint.assigment2.gui.icon.MouseIcon;
 import de.tub.mobint.assigment2.paddle.AIPaddleController;
 import de.tub.mobint.assigment2.paddle.HandPaddleController;
 import de.tub.mobint.assigment2.paddle.KeyPaddleController;
@@ -15,8 +26,6 @@ import de.tub.mobint.assigment2.paddle.Paddle;
 import de.tub.mobint.assigment2.paddle.PaddleController;
 
 import processing.core.*;
-
-import SimpleOpenNI.*;
 
 public class Pong extends PApplet {
 
@@ -34,31 +43,14 @@ public class Pong extends PApplet {
 	float fps = 30.0f;
 	
 	int margin = 50;
-	int paddleOffset = 0;
 	
 	int scoreSize = 40;
 
-	int scoreP1;
-	int scoreP2;
+	User user1;
+	User user2;
 	
-	String infoText = "";
-	int infoTextSize = 15;
-	int[] infoTextColor = {0, 102, 153};
-	int infoTextTimeout = 50;
-	int infoTextCountdown = 0;
-	int infoTextX = 60;
-	int infoTextY = 60;
-	
-	String leftAIText = "";
-	String rightAIText = "";
-	int AITextSize = 15;
-	int[] AITextColor = {52, 190, 68};
-//	int AITextTimeout = 50;
-//	int AITextCountdown = 0;
-	int leftAITextX = 60;
-	int leftAITextY = 470;
-	int rightAITextX = 575;
-	int rightAITextY = 470;
+	InfoText commonInfo;
+	InfoText scoreBoard;
 		
 	Field field;
 	Ball ball;
@@ -69,90 +61,107 @@ public class Pong extends PApplet {
 	KeyPaddleController leftKeyPC;
 	KeyPaddleController rightKeyPC;
 	
-	AIPaddleController rightSimpleAIPC;
-	AIPaddleController rightStrongAIPC;
+	CollisionDetection collisionDetection;
 	
-	PaddleController activeLeftPC;
-	PaddleController activeRightPC;
+	// Test
+	RingButton leftBallSpeedButton;
+	RingButton rightBallSpeedButton;
 	
-	PaddleController prevLeftPC;
-	PaddleController prevRightPC;
-	
-	HandPaddleController leftHandPC;
-	HandPaddleController rightHandPC;
-	
-	Vector<CollisionDetection> collisionDetections = new Vector<CollisionDetection>();
-	int cdIndex = 0;
-	
-	//Store the AIs for the right paddle
-	Vector<ArtificialIntelligence> rightPaddleAIs = new Vector<ArtificialIntelligence>();
-	int rightAILevel = 0;
-	
-	//Store the AIs for the left paddle
-	Vector<ArtificialIntelligence> leftPaddleAIs = new Vector<ArtificialIntelligence>();
-	int leftAILevel = 0;
+	boolean deviceConnected;
 	
 	public void setup(){
 		size(width,height,P2D);
 		background(0);
 		frameRate(fps);
 		
+		smooth();
+		
 		// OpenNI stuff
 		
 		//context = new SimpleOpenNI(this, SimpleOpenNI.RUN_MODE_MULTI_THREADED);
-		onicr = new OpenNiControlRecognition(this, SimpleOpenNI.RUN_MODE_SINGLE_THREADED);
-		onicr.enableDepth();
-		onicr.enableUser(SimpleOpenNI.SKEL_PROFILE_ALL);
+		deviceConnected = SimpleOpenNI.deviceCount() > 0; 
+		if( deviceConnected ){
+			onicr = new OpenNiControlRecognition(this, SimpleOpenNI.RUN_MODE_SINGLE_THREADED);
+			onicr.enableDepth();
+			onicr.enableUser(SimpleOpenNI.SKEL_PROFILE_ALL);
+		}
 		
 		
-		field = new Field(scoreSize + margin/2, height - margin/2, margin, width-margin, 0, width);
+		field = new Field(scoreSize + margin/2, height - margin, margin, width-margin, 0, width);
 		
 		ball = new Ball(this);
 		ballVelocity = ball.velocity;
 		
-		lPaddle = new Paddle(this, field.left+paddleOffset, field.verticalCenter, field.getLeftArea(ball.strokeWeight));
-		rPaddle = new Paddle(this, field.right-paddleOffset, field.verticalCenter, field.getRightArea(ball.strokeWeight));
+		lPaddle = new Paddle(this, field.left, field.verticalCenter, field.getLeftArea(ball.strokeWeight));
+		rPaddle = new Paddle(this, field.right, field.verticalCenter, field.getRightArea(ball.strokeWeight));
 		
 		resetBall(false);
 		
-		//collisionDetections.add(new SimpleCollisionDetection(ball, field, lPaddle, rPaddle));
+		collisionDetection = new PreciseCollisionDetection(ball, field, lPaddle, rPaddle);
 		
-		PreciseCollisionDetection pcd = new PreciseCollisionDetection(ball, field, lPaddle, rPaddle);
-		pcd.setPApplet(this);
-		collisionDetections.add(pcd);
+		// hold references to update on mouse or keyboard action
+		mousePC = new MousePaddleController(lPaddle,new MouseIcon(this));
+		leftKeyPC = new KeyPaddleController(lPaddle,new KeyIcon(this));
+		rightKeyPC = new KeyPaddleController(rPaddle,new KeyIcon(this));
 		
-		mousePC = new MousePaddleController(lPaddle);
-		leftKeyPC = new KeyPaddleController(lPaddle);
-		rightKeyPC = new KeyPaddleController(rPaddle);
+		// Info text
+		commonInfo = new InfoText(this, color(0,102,153), new Point2D.Float(60,60));
 		
-		rightSimpleAIPC = new AIPaddleController(rPaddle, new SimpleAI(ball, field, rPaddle));
-		rightStrongAIPC = new AIPaddleController(rPaddle, new PerfectAI(ball, field, rPaddle, lPaddle));
+		InfoText leftPCInfo = new InfoText(this, color(52,190,68), new Point2D.Float(60,470));
+		leftPCInfo.timeout = -1;
 		
-		activeLeftPC = mousePC;
-		activeRightPC = rightStrongAIPC;
+		InfoText rightPCInfo = new InfoText(this, color(52,190,68), new Point2D.Float(575,470));
+		rightPCInfo.timeout = -1;
+		rightPCInfo.align = PApplet.RIGHT;
 		
-		leftHandPC = new HandPaddleController(lPaddle, onicr);
-		rightHandPC = new HandPaddleController(rPaddle, onicr);
+		scoreBoard = new InfoText( this, color(255), new Point2D.Float(field.horizontalCenter, scoreSize));
+		scoreBoard.size = scoreSize;
+		scoreBoard.align = CENTER;
+		
+		
+		user1 = new User(	lPaddle,
+							Arrays.asList(
+								mousePC,
+								new AIPaddleController(lPaddle, new AiIcon(this), new SimpleAI(ball, field, lPaddle)),
+								new HandPaddleController(lPaddle, new HandIcon(this)),
+								leftKeyPC
+							),
+							onicr,
+							leftPCInfo,
+							new HandMarker(new HandIcon(this))
+						);
+		
+		user2 = new User(	rPaddle,
+							Arrays.asList(
+								new AIPaddleController(rPaddle,new AiIcon(this), new PerfectAI(ball, field, rPaddle, lPaddle)),
+								new HandPaddleController(rPaddle, new HandIcon(this)),
+								rightKeyPC
+							),
+							onicr,
+							rightPCInfo,
+							new HandMarker(new HandIcon(this))
+						);
+		
+		//ballSpeedButton = new RingButton(this, new Point2D.Float(field.horizontalCenter,field.height-40.f), 25.f);
+		leftBallSpeedButton = new RingButton(this, new Point2D.Float(field.horizontalCenter-60,field.bottom+30), 30.0f,new BallFastIcon(this));
+		rightBallSpeedButton = new RingButton(this, new Point2D.Float(field.horizontalCenter+60,field.bottom+30), 30.0f,new BallSlowIcon(this));
 
 	}
 	
 	public void draw(){
 		float dT = 1.0f / frameRate;
-		//processInputs(); // user inputs
 		
-		onicr.update();
-		
-		// not necessary anymore, recalculate every cycle
-		/*if(ballVelocity != ball.velocity){
+		if(ballVelocity != ball.velocity){
 			ball.velocity = ballVelocity;
-			collisionDetections.get(cdIndex).init();
-		}*/
+		}
+		
+		if(deviceConnected){
+			onicr.update();
+		}
 		
 		update(dT); // move objects
 		
-		
-		
-		render(); // draw
+		render(dT); // draw
 	}
 	
 	private void resetBall( boolean p1 ){
@@ -163,220 +172,143 @@ public class Pong extends PApplet {
 		ball.out = false;
 	}
 	
-	private void render(){
+	private void render(float dT){
 		//clear bg
 		background(0);
 		
 		
-		
-		//mirror image for better usability
-		pushMatrix();
-		scale(-1,1);		//flip across x axis
-
-		//The x position is negative because we flipped
-		image(onicr.depthImage(), -width, 0);
-		//restore previous translation,etc
-		popMatrix(); 
-		
-		
-		
+		if( deviceConnected ){
+			//mirror image for better usability
+			pushMatrix();
+			scale(-1,1);		//flip across x axis
+	
+			//The x position is negative because we flipped
+			image(onicr.depthImage(), -width, 0);
+			popMatrix();  //restore previous translation,etc 
+		}
 		
 		strokeWeight(0);
 		fill(0, 180); // don't let depth image be to intensive
 		rect(0,0, width, height);
 		
 		
-		
-		
 		//Draw field and score
-		stroke(255);
-		strokeWeight(10);
-		textSize(scoreSize);
-		textAlign(CENTER);
-		fill(255);
-		text(scoreP1 + " : " + scoreP2, field.horizontalCenter, scoreSize);
+		scoreBoard.setText(user1.score + " : " + user2.score);
+		scoreBoard.draw();
+		
+		//underline asus controller player score
+		/*
+		strokeWeight(1);
+		if(user1.isInUse()){
+			line(field.horizontalCenter-10, scoreSize+5, field.horizontalCenter-20, scoreSize+5);
+		}
+		
+		if(user2.isInUse()){
+			line(field.horizontalCenter+10, scoreSize+5, field.horizontalCenter+20, scoreSize+5);
+		}*/
 		
 		//info display
-		textSize(infoTextSize);
-		textAlign(LEFT);
-		fill(infoTextColor[0], infoTextColor[1], infoTextColor[2]);
-		text(infoText, infoTextX, infoTextY);
-		
-		//left AI display
-		textSize(AITextSize);
-		textAlign(LEFT);
-		fill(AITextColor[0], AITextColor[1], AITextColor[2]);
-		text(leftAIText, leftAITextX, leftAITextY);
-		
-		//right AI display
-		textSize(AITextSize);
-		textAlign(RIGHT);
-		fill(AITextColor[0], AITextColor[1], AITextColor[2]);
-		text(rightAIText, rightAITextX, rightAITextY);
+		commonInfo.draw();
 		
 		// dashed line
+		int lineBot;
+		strokeWeight(10);
 		for(int i = field.top; i < field.bottom; i=i+20){
-			line(field.horizontalCenter, i, field.horizontalCenter, i+10);
+			lineBot = i + 10;
+			if( lineBot >= field.bottom ){
+				lineBot = field.bottom;
+			}
+			
+			line(field.horizontalCenter, i, field.horizontalCenter, lineBot);
 		}
+		// out field
 		strokeWeight(0);
 		fill(0xff, 80);
 		rect(1,field.top, field.left, field.height);
 		rect(field.right,field.top, width, field.height);
-		
+		// horizontal bounds
 		strokeWeight(1);
 		stroke(99);
 		line(0,field.top-1,width,field.top-1);
 		line(0,field.bottom,width,field.bottom);
 		
-		// draw Paddels
-		lPaddle.draw();
-		rPaddle.draw();
+		
+		user1.draw(dT);
+		user2.draw(dT);
 		
 		// draw ball
-		ball.draw(); 
+		ball.draw();
+		
+		leftBallSpeedButton.draw(dT);
+		rightBallSpeedButton.draw(dT);
 	}
 	
 	public void update(float dT){
+		user1.update(dT);
+		user2.update(dT);
 		
-		activeLeftPC.update(dT);
-		activeRightPC.update(dT);
-		//activeRightPC.update(dT);
-		
-		
-		/*if( leftAILevel != 0)
-			leftPaddleAIs.get(leftAILevel-1).update(dT);
-		lPaddle.update(dT);
-		
-		if( rightAILevel != 0)
-			rightPaddleAIs.get(rightAILevel-1).update(dT);
-		rPaddle.update(dT);
-		*/
-		
-		
-		int collision = collisionDetections.get(cdIndex).update(dT);
+		int collision = collisionDetection.update(dT);
 		if( collision > 0){
-			scoreP1++;
+			user1.score++;
 			resetBall(true);
 		} else if(collision < 0){
-			scoreP2++;
+			user2.score++;
 			resetBall(false);
 		}
-		
-		if (infoTextCountdown > 0)
-			infoTextCountdown--;
-		else
-			infoText = "";
 	}
 	
 	public void keyPressed( ) {
 		//Move left paddle
-		if(leftAILevel == 0){
-			if( key == 'q' ) leftKeyPC.setMovement(-1);
-			if( key == 'a' ) leftKeyPC.setMovement(1);
-		}
+		if( key == 'q' ) leftKeyPC.setMovement(-1);
+		if( key == 'a' ) leftKeyPC.setMovement(1);
 		
 		//Move right paddle
-		if(rightAILevel == 0){
-			if( key == 'o' ) rightKeyPC.setMovement(-1);
-			if( key == 'l' ) rightKeyPC.setMovement(1);
-		}
+		if( key == 'o' ) rightKeyPC.setMovement(-1);
+		if( key == 'l' ) rightKeyPC.setMovement(1);
 		
 		//Increase ball speed
 		if( key == '+'){ 
 			ballVelocity += 20.0f;
-			infoText = "Ball speed: " + ballVelocity;
-			infoTextCountdown = infoTextTimeout;
+			commonInfo.setText("Ball speed: " + ballVelocity);
 		}
 		//Decrease ball speed
 		if( key == '-'){
 			ballVelocity -= 20.0f;
 			if( ballVelocity < 20.0f) ballVelocity = 20.0f;
-			infoText = "Ball speed: " + ballVelocity;
-			infoTextCountdown = infoTextTimeout;
+			commonInfo.setText("Ball speed: " + ballVelocity);
 		}
 		
 		//Increase framerate
 		if( key == '*') { 
 			fps += 5.0f;
-			infoText = "Fps: " + fps;
-			infoTextCountdown = infoTextTimeout;
+			commonInfo.setText("Fps: " + fps);
 		}
 		//Decrease framerate
 		if( key == '/'){
 			fps -= 5.0f;
 			if( fps < 1.0f) fps = 1.0f;
-			infoText = "Fps: " + fps;
-			infoTextCountdown = infoTextTimeout;
+			commonInfo.setText( "Fps: " + fps );
 		}
 		if(frameRate != fps ){
 			frameRate(fps);
 		}
 		
-/*		//AI for left paddle
-		if( key == 'v' ){
-			leftAILevel += 1;
-			if(leftAILevel > leftPaddleAIs.size() ) leftAILevel = 0;
-			
-			if (leftAILevel == 0) {
-				lPaddle.movement = 0;
-				System.out.println("AI: off");
-				leftAIText = "AI: off";
-//				AITextCountdown = AITextTimeout;
-			}
-			else {
-				System.out.println("AI: " + leftPaddleAIs.get(leftAILevel-1).getName() );
-				leftAIText = "AI: " + leftPaddleAIs.get(leftAILevel-1).getName();
-//				AITextCountdown = AITextTimeout;
-			}
-		}
-		
-		//AI for right paddle
-		if( key == 'b' ){
-			rightAILevel += 1;
-			if(rightAILevel > rightPaddleAIs.size() ) rightAILevel = 0;
-			
-			if (rightAILevel == 0) {
-				rPaddle.movement = 0;
-				System.out.println("AI: off");
-				rightAIText = "AI: off";
-//				AITextCountdown = AITextTimeout;
-			}
-			else {
-				System.out.println("AI: " + rightPaddleAIs.get(rightAILevel-1).getName() );
-				rightAIText = "AI: " + rightPaddleAIs.get(rightAILevel-1).getName();
-//				AITextCountdown = AITextTimeout;
-			}
-		}
-		*/
-		
-		//Select type of collision detection
-		/*
-		if( key == 'c' ){
-			cdIndex ++;
-			if(cdIndex >= collisionDetections.size() ) cdIndex = 0;
-			collisionDetections.get(cdIndex).init();
-			System.out.println("Collision detection: "+ collisionDetections.get(cdIndex).getName());
-			infoText = "Collision detection: "+ collisionDetections.get(cdIndex).getName();
-			infoTextCountdown = infoTextTimeout;
-		}
-		*/
+
 	}
 	
 	public void keyReleased( ) {
-		if(leftAILevel == 0){
-			if( key == 'q' && leftKeyPC.movement == -1) leftKeyPC.setMovement(0);
-			if( key == 'a' && leftKeyPC.movement == 1) leftKeyPC.setMovement(0);
-		}
+		if( key == 'q' && leftKeyPC.movement == -1) leftKeyPC.setMovement(0);
+		if( key == 'a' && leftKeyPC.movement == 1) leftKeyPC.setMovement(0);
 		
-		if(rightAILevel == 0){
-			if( key == 'o' && rightKeyPC.movement == -1) rightKeyPC.setMovement(0);
-			if( key == 'l' && rightKeyPC.movement == 1) rightKeyPC.setMovement(0);
-		}
+		if( key == 'o' && rightKeyPC.movement == -1) rightKeyPC.setMovement(0);
+		if( key == 'l' && rightKeyPC.movement == 1) rightKeyPC.setMovement(0);
 	}
 	
 	
 	public void mouseMoved(){
 		mousePC.setMousePosition(mouseX, mouseY);
+		
+		user1.emulateHand(mouseX, mouseY);
 	}
 	
 	public void onNewUser(int userId){
@@ -386,24 +318,25 @@ public class Pong extends PApplet {
 	
 	public void onLostUser(int userId){
 		System.out.println("lost user: " + userId);
-		if( userId == 1){
-			activeLeftPC = prevLeftPC;
-		} else if( userId == 2){
-			activeLeftPC = prevRightPC;
-		}
+		user1.lostUser(userId);
+		user2.lostUser(userId);
+		
+		// remove from waiting list
 		
 	}
 	
 	public void onEndCalibration( int userId, boolean successfull){
 		System.out.println("calibration complete");
-		if(successfull) onicr.startTrackingSkeleton(userId);
-		
-		if( userId == 1){
-			prevLeftPC = activeLeftPC;
-			activeLeftPC = leftHandPC;
-		} else if( userId == 2){
-			prevRightPC = activeLeftPC;
-			activeRightPC = rightHandPC;
+		if(successfull){
+			onicr.startTrackingSkeleton(userId);
+			
+			if( !user1.isInUse() ){
+				user1.id = userId;
+			} else if ( !user2.isInUse() ){
+				user2.id = userId;
+			}/* else {
+				// add to waiting list
+			}*/
 		}
 	}
 

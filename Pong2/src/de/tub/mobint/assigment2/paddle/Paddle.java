@@ -14,7 +14,7 @@ public class Paddle extends Point2D.Float{
 
 	Area bounds;
 	
-	PApplet parent;
+	public PApplet parent;
 	int strokeWeight = 10;
 	int color = 255;
 	
@@ -25,7 +25,7 @@ public class Paddle extends Point2D.Float{
 	public static final int LEFT_SIDE = 1;
 	public static final int RIGHT_SIDE = 2;
 	
-	int side;
+	public int side;
 	
 	public Paddle(PApplet p, float x, float y, Area bounds){
 		super( x, y);

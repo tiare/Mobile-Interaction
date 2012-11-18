@@ -1,9 +1,8 @@
 package de.tub.mobint.assigment2.paddle;
 
-public class KeyPaddleController implements PaddleController {
+import de.tub.mobint.assigment2.gui.icon.Icon;
 
-	
-	Paddle paddle;
+public class KeyPaddleController extends PaddleController {
 	
 	float x;
 	float y;
@@ -12,14 +11,17 @@ public class KeyPaddleController implements PaddleController {
 	public int movement = 0;
 	
 	
-	public KeyPaddleController( Paddle paddle ) {
-		this.paddle = paddle;
+	public KeyPaddleController( Paddle paddle, Icon icon ) {
+		super(paddle, icon);
 	}
 
 	@Override
 	public void update(float dT) {
 		if( movement != 0 ){
-			paddle.updatePosition(paddle.x, paddle.y + velocity * movement * dT );
+			float x;
+			if( paddle.side == Paddle.LEFT_SIDE )	x = paddle.bounds.left;
+			else									x = paddle.bounds.right;
+			paddle.updatePosition(x, paddle.y + velocity * movement * dT );
 		}
 	}
 	
@@ -29,6 +31,6 @@ public class KeyPaddleController implements PaddleController {
 
 	@Override
 	public String getName() {
-		return "Key controlled paddle";
+		return "Keyboard";
 	}
 }

@@ -8,9 +8,8 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import de.tub.mobint.assigment2.Ball;
 import de.tub.mobint.assigment2.Field;
 import de.tub.mobint.assigment2.paddle.Paddle;
-import de.tub.mobint.assigment2.paddle.PaddleController;
 
-public class PerfectAI extends ArtificialIntelligence implements PaddleController{
+public class PerfectAI extends ArtificialIntelligence{
 
 	Point2D requiredPaddlePos; // position of next hit on own side
 	Point2D hitPoint; 

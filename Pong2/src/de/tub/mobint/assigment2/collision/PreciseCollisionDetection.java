@@ -11,8 +11,6 @@ import de.tub.mobint.assigment2.paddle.Paddle;
 import processing.core.PApplet;
 
 public class PreciseCollisionDetection extends CollisionDetection {
-
-	PApplet parent;
 	
 	private static final int HEADING_TOP = 1;
 	private static final int HEADING_BOTTOM = 2;
@@ -174,9 +172,4 @@ public class PreciseCollisionDetection extends CollisionDetection {
 	public void init() {
 		remainingTime = Float.MAX_VALUE;
 	}
-
-	public void setPApplet(PApplet parent){
-		this.parent = parent;
-	}
-	
 }
