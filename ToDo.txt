@@ -1,0 +1,17 @@
+Pong 2
+------
+1. erweiterte Coll. Detection für x-Bewegung des paddles (Andreas)
+2. Schnippeln,Anschneiden (Alex in verbindung mit Andreas Coll.Det.)
+3. Reset (Marcel)
+4. Positionscheck linker/rechter Spieler (Jonas)
+5. Ballgeschwindigkeit ändern (Lena)
+6. Doku schreiben (Jonas)
+7. optional: Einwurfwinkel randomisieren
+
+Team-Info (für die Doku)
+---------
+Andreas
+Alex
+Jonas
+Marcel Karsten (343619)
+Tiare Feuchtner (343302)
