@@ -2,6 +2,7 @@ package de.tub.mobint.assigment2;
 
 import java.awt.geom.Point2D;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import SimpleOpenNI.SimpleOpenNI;
 
@@ -23,7 +24,6 @@ import de.tub.mobint.assigment2.paddle.HandPaddleController;
 import de.tub.mobint.assigment2.paddle.KeyPaddleController;
 import de.tub.mobint.assigment2.paddle.MousePaddleController;
 import de.tub.mobint.assigment2.paddle.Paddle;
-import de.tub.mobint.assigment2.paddle.PaddleController;
 
 import processing.core.*;
 
@@ -68,6 +68,8 @@ public class Pong extends PApplet {
 	RingButton rightBallSpeedButton;
 	
 	boolean deviceConnected;
+	
+	LinkedList<Integer> waitingUsers;
 	
 	public void setup(){
 		size(width,height,P2D);
@@ -141,6 +143,8 @@ public class Pong extends PApplet {
 							rightPCInfo,
 							new HandMarker(new HandIcon(this))
 						);
+		
+		waitingUsers = new LinkedList<Integer>();
 		
 		//ballSpeedButton = new RingButton(this, new Point2D.Float(field.horizontalCenter,field.height-40.f), 25.f);
 		leftBallSpeedButton = new RingButton(this, new Point2D.Float(field.horizontalCenter-60,field.bottom+30), 30.0f,new BallFastIcon(this));
@@ -318,10 +322,21 @@ public class Pong extends PApplet {
 	
 	public void onLostUser(int userId){
 		System.out.println("lost user: " + userId);
-		user1.lostUser(userId);
-		user2.lostUser(userId);
-		
-		// remove from waiting list
+		if( user1.lostUser(userId) ){
+			if( waitingUsers.size() > 0){
+				user1.id = waitingUsers.removeFirst();
+				System.out.println("took user from waiting list");
+			}
+		} else if( user2.lostUser(userId) ){
+			if( waitingUsers.size() > 0){
+				user2.id = waitingUsers.removeFirst();
+				System.out.println("took user from waiting list");
+			}
+		} else {
+			// remove from waiting list
+			waitingUsers.remove(new Integer(userId));
+			System.out.println("removed user from waiting list");
+		}
 		
 	}
 	
@@ -334,9 +349,9 @@ public class Pong extends PApplet {
 				user1.id = userId;
 			} else if ( !user2.isInUse() ){
 				user2.id = userId;
-			}/* else {
-				// add to waiting list
-			}*/
+			} else {
+				waitingUsers.add(userId);
+			}
 		}
 	}
 

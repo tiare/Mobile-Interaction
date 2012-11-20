@@ -151,11 +151,12 @@ public class User implements ButtonActivationListener{
 		return id > 0;
 	}
 	
-	public void lostUser( int userId ){
+	public boolean lostUser( int userId ){
 		if( userId == id ){
-			
 			id = 0;
+			return true;
 		}
+		return false;
 	}
 	
 	public void draw(float dT){
