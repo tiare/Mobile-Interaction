@@ -13,6 +13,7 @@ import processing.core.PApplet;
 public class Paddle extends Point2D.Float{
 
 	Area bounds;
+	public float velX,velY;
 	
 	public PApplet parent;
 	int strokeWeight = 10;
@@ -29,6 +30,8 @@ public class Paddle extends Point2D.Float{
 	
 	public Paddle(PApplet p, float x, float y, Area bounds){
 		super( x, y);
+		velX = 0;
+		velY = 0;
 		parent = p; 
 		this.bounds = bounds;
 		// dirty, change maybe later
@@ -43,9 +46,18 @@ public class Paddle extends Point2D.Float{
 		parent.line(x,y + halfSize, x, y - halfSize);
 	}
 	
-	public void updatePosition(float x, float y){
-		this.x = x;
-		this.y = y;
+	public void updatePosition(float x, float y,boolean computeSpeed){
+		if(computeSpeed) {
+			this.x += velX;
+			this.y += velY;
+			velX = x - this.x;
+			velY = y - this.y;
+		}else{
+			this.x = x;
+			this.y = y;
+			velX = 0;
+			velY = 0;
+		}
 		
 		considerBounds();
 	}

@@ -17,7 +17,7 @@ public class HandPaddleController extends PaddleController implements LeftHandPo
 	
 	@Override
 	public void update(float dT) {
-		paddle.updatePosition(pos.x,pos.y);
+		paddle.updatePosition(pos.x,pos.y,true);
 
 	}
 

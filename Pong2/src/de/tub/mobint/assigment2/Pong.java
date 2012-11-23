@@ -71,6 +71,7 @@ public class Pong extends PApplet {
 	
 	LinkedList<Integer> waitingUsers;
 	
+	@Override
 	public void setup(){
 		size(width,height,P2D);
 		background(0);
@@ -98,7 +99,7 @@ public class Pong extends PApplet {
 		rPaddle = new Paddle(this, field.right, field.verticalCenter, field.getRightArea(ball.strokeWeight));
 		
 		resetBall(false);
-		
+
 		collisionDetection = new PreciseCollisionDetection(ball, field, lPaddle, rPaddle);
 		
 		// hold references to update on mouse or keyboard action
