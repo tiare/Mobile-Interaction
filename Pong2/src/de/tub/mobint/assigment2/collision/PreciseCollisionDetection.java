@@ -27,7 +27,7 @@ public class PreciseCollisionDetection extends CollisionDetection {
 	Vector3D lPaddleLine;
 	Vector3D rPaddleLine;
 	
-	float ballDirX,ballDirY,ballVelX,ballVelY,ballSignX,ballSignY;
+	float ballSignX,ballSignY;
 	
 	float remainingTime; // time until next hit
 	int heading;
@@ -115,26 +115,31 @@ public class PreciseCollisionDetection extends CollisionDetection {
 	
 	private boolean handlePaddleCollision(Paddle paddle) {
 		
-		if(ballVelX*paddle.direction>0 && paddle.velX*paddle.direction<ballVelX*paddle.direction)
+		if(ball.ballVelX*paddle.direction>0 && paddle.velX*paddle.direction<ball.ballVelX*paddle.direction)
 			return false;
 		
 		float ballSize = ball.strokeWeight/2;
 		float paddleWidth = paddle.strokeWeight/2;
-		
+		float paddleSpeedX=paddle.velX/deltaTime;
+		float paddleSpeedY=paddle.velY/deltaTime;
 		float delta = (ball.x-ballSize*paddle.direction) - (paddle.x+paddleWidth*paddle.direction);
-		float t = delta / (paddle.velX/deltaTime - ballVelX);
+		float t = delta / (paddleSpeedX - ball.ballVelX);
 		if(t<0)
 			return false;
 		
 		float newPaddleX = paddle.x + t*paddle.velX;
 		float newPaddleY = paddle.y + t*paddle.velY;
-		float newBallY = ball.y + t*ballVelY;
+		float newBallY = ball.y + t*ball.ballVelY;
 		
 		boolean collUp   = (newBallY-ballSize)>=newPaddleY-paddle.halfSize && (newBallY-ballSize)<=newPaddleY+paddle.halfSize;
 		boolean collDown = (newBallY+ballSize)>=newPaddleY-paddle.halfSize && (newBallY+ballSize)<=newPaddleY+paddle.halfSize;
 
 		if(collUp || collDown) {
 			remainingTime = t;
+			//if(paddleSpeedX*ball.ballVelX<0) {
+				ball.bounceSpeedX=paddleSpeedX;
+				ball.bounceSpeedY=paddleSpeedY;
+			//}
 			return true;
 		}
 		
@@ -144,14 +149,11 @@ public class PreciseCollisionDetection extends CollisionDetection {
 	private void detectNextCollision(){
 		remainingTime = Float.MAX_VALUE;
 		
-		ballDirX = (float)(Math.cos(ball.heading));
-		ballDirY = (float)(Math.sin(ball.heading));
-		ballVelX = ballDirX*ball.velocity;
-		ballVelY = ballDirY*ball.velocity;
-		ballSignX = ballVelX<0?-1:1;
-		ballSignY = ballVelY<0?-1:1;
-		boolean positiveX = ballDirX > 0;
-		boolean positiveY = ballDirY > 0;
+		ball.updateSpeed();
+		ballSignX = ball.ballVelX<0?-1:1;
+		ballSignY = ball.ballVelY<0?-1:1;
+		boolean positiveX = ball.ballDirX > 0;
+		boolean positiveY = ball.ballDirY > 0;
 		
 		Vector3D path = Vector3D.crossProduct(	new Vector3D(ball.x, ball.y, 1),
 						new Vector3D(ball.x + Math.cos(ball.heading),

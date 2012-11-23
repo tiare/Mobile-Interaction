@@ -64,6 +64,7 @@ public class PerfectAI extends ArtificialIntelligence{
 	public void update(float dT) {
 		fakeBall.setLocation(ball);
 		fakeBall.heading = ball.heading;
+		fakeBall.updateSpeed();
 		//Find the goal position to deflect ball
 		
 		// enemies vertical bound must be computed each update cycle
@@ -85,7 +86,8 @@ public class PerfectAI extends ArtificialIntelligence{
 	private void traceBallPath(){
 		int abort = leftSide? HEADING_LEFT : HEADING_RIGHT; 
 		
-		while( heading != abort ){
+		if(false)
+		while( fakeBall.ballVelX*paddle.direction>0 && heading != abort ){
 			remainingTime = Float.MAX_VALUE;
 			
 			boolean positiveX = Math.cos(fakeBall.heading) > 0;
@@ -117,8 +119,11 @@ public class PerfectAI extends ArtificialIntelligence{
 			}
 			if (heading == HEADING_TOP || heading == HEADING_BOTTOM)
 				fakeBall.horizontalBounce();
-			else
-				fakeBall.verticalBounce();
+			else 
+				if(heading == HEADING_LEFT || heading == HEADING_RIGHT)
+					fakeBall.verticalBounce();
+				else
+					break;
 			
 			fakeBall.x = (float)hitPoint.getX();
 			fakeBall.y = (float)hitPoint.getY();
@@ -133,7 +138,7 @@ public class PerfectAI extends ArtificialIntelligence{
 		Vector3D hi = Vector3D.crossProduct(path, bound);
 		Point2D.Float intersection = new Point2D.Float(	(float)(hi.getX() / hi.getZ()),
 														(float)(hi.getY() / hi.getZ()));
-		float tmpTime = (float) fakeBall.distance(intersection) / ball.velocity; 
+		float tmpTime = (float) fakeBall.distance(intersection) / ball.velocity;
 		if( tmpTime < remainingTime){
 			hitPoint = intersection;
 			remainingTime = tmpTime;

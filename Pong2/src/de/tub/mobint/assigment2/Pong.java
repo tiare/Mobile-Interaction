@@ -1,11 +1,12 @@
 package de.tub.mobint.assigment2;
 
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import processing.core.PApplet;
 import SimpleOpenNI.SimpleOpenNI;
-
 import de.tub.mobint.assigment2.ai.PerfectAI;
 import de.tub.mobint.assigment2.ai.SimpleAI;
 import de.tub.mobint.assigment2.collision.CollisionDetection;
@@ -24,8 +25,6 @@ import de.tub.mobint.assigment2.paddle.HandPaddleController;
 import de.tub.mobint.assigment2.paddle.KeyPaddleController;
 import de.tub.mobint.assigment2.paddle.MousePaddleController;
 import de.tub.mobint.assigment2.paddle.Paddle;
-
-import processing.core.*;
 
 public class Pong extends PApplet {
 
@@ -156,9 +155,9 @@ public class Pong extends PApplet {
 	public void draw(){
 		float dT = 1.0f / frameRate;
 		
-		if(ballVelocity != ball.velocity){
-			ball.velocity = ballVelocity;
-		}
+//		if(ballVelocity > ball.velocity){
+//			ball.velocity = ballVelocity;
+//		}
 		
 		if(deviceConnected){
 			onicr.update();
@@ -170,11 +169,13 @@ public class Pong extends PApplet {
 	}
 	
 	private void resetBall( boolean p1 ){
-		ball.setLocation( p1 ? field.left + margin*0.5f : field.right - margin*0.5f,
-				p1 ? lPaddle.getY() : rPaddle.getY());
+//		ball.setLocation( p1 ? field.left + margin*0.5f : field.right - margin*0.5f,
+//				p1 ? lPaddle.getY() : rPaddle.getY());
+		ball.setLocation(new Point(field.horizontalCenter,field.verticalCenter));
 		float pi = processing.core.PConstants.PI;
 		ball.heading = p1 ? pi/4.0f : pi-pi/4.0f;
 		ball.out = false;
+		ball.velocity = ballVelocity;
 	}
 	
 	private void render(float dT){
