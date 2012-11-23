@@ -95,8 +95,8 @@ public class Pong extends PApplet {
 		ball = new Ball(this);
 		ballVelocity = ball.velocity;
 		
-		lPaddle = new Paddle(this, field.left, field.verticalCenter, field.getLeftArea(ball.strokeWeight));
-		rPaddle = new Paddle(this, field.right, field.verticalCenter, field.getRightArea(ball.strokeWeight));
+		lPaddle = new Paddle(this, field.left, field.verticalCenter, 1, field.getLeftArea(ball.strokeWeight));
+		rPaddle = new Paddle(this, field.right, field.verticalCenter, -1, field.getRightArea(ball.strokeWeight));
 		
 		resetBall(false);
 

@@ -16,19 +16,20 @@ public class Paddle extends Point2D.Float{
 	public float velX,velY;
 	
 	public PApplet parent;
-	int strokeWeight = 10;
+	public int strokeWeight = 10;
 	int color = 255;
 	
-	int halfSize = 34;
+	public int halfSize = 34;
 	
 	float heading = 0;
+	public int direction;
 	
 	public static final int LEFT_SIDE = 1;
 	public static final int RIGHT_SIDE = 2;
 	
 	public int side;
 	
-	public Paddle(PApplet p, float x, float y, Area bounds){
+	public Paddle(PApplet p, float x, float y, int direction,Area bounds){
 		super( x, y);
 		velX = 0;
 		velY = 0;
@@ -37,6 +38,7 @@ public class Paddle extends Point2D.Float{
 		// dirty, change maybe later
 		if( x < 320 ) side = LEFT_SIDE;
 		else side = RIGHT_SIDE;
+		this.direction = direction;
 	}
 	
 	
@@ -48,10 +50,14 @@ public class Paddle extends Point2D.Float{
 	
 	public void updatePosition(float x, float y,boolean computeSpeed){
 		if(computeSpeed) {
-			this.x += velX;
-			this.y += velY;
-			velX = x - this.x;
-			velY = y - this.y;
+			float newX = x;
+			if( newX > bounds.right) newX = bounds.right;
+			if( newX < bounds.left ) newX = bounds.left;
+			float newY = y;
+			if( newY + halfSize > bounds.bottom ) newY = bounds.bottom - halfSize;
+			if( newY - halfSize < bounds.top ) newY = bounds.top + halfSize;
+			velX = newX - this.x;
+			velY = newY - this.y;
 		}else{
 			this.x = x;
 			this.y = y;
@@ -82,6 +88,12 @@ public class Paddle extends Point2D.Float{
 		}
 		return Vector3D.crossProduct(	new Vector3D(x + offset, y, 1),
 										new Vector3D(x + offset, y+halfSize, 1));
+	}
+
+
+	public void move() {
+		this.x += velX;
+		this.y += velY;
 	}
 
 }

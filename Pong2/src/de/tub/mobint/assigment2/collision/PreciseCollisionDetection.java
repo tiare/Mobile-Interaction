@@ -8,8 +8,6 @@ import de.tub.mobint.assigment2.Ball;
 import de.tub.mobint.assigment2.Field;
 import de.tub.mobint.assigment2.paddle.Paddle;
 
-import processing.core.PApplet;
-
 public class PreciseCollisionDetection extends CollisionDetection {
 	
 	private static final int HEADING_TOP = 1;
@@ -29,10 +27,12 @@ public class PreciseCollisionDetection extends CollisionDetection {
 	Vector3D lPaddleLine;
 	Vector3D rPaddleLine;
 	
-	Point2D nextHit; // position of next hit
+	float ballDirX,ballDirY,ballVelX,ballVelY,ballSignX,ballSignY;
+	
 	float remainingTime; // time until next hit
 	int heading;
 	float halfBallWidth;
+	float deltaTime;
 	
 	public PreciseCollisionDetection(Ball ball, Field field,
 			Paddle lPaddle, Paddle rPaddle) {
@@ -62,6 +62,8 @@ public class PreciseCollisionDetection extends CollisionDetection {
 		rPaddleLine = rPaddle.getLine(-ball.strokeWeight*0.5f);
 		detectNextCollision();
 		
+		deltaTime = dT;
+		
 		while( remainingTime < dT ){
 			ball.update(remainingTime);
 			dT -= remainingTime;
@@ -73,8 +75,11 @@ public class PreciseCollisionDetection extends CollisionDetection {
 			
 			detectNextCollision();
 		}
-		remainingTime -= dT;
+		//remainingTime -= dT;
 		ball.update(dT);
+		
+		lPaddle.move();
+		rPaddle.move();
 		
 		return 0;
 	}
@@ -94,11 +99,13 @@ public class PreciseCollisionDetection extends CollisionDetection {
 			return 1;
 			
 		case HEADING_LEFT:
-			if( lPaddle.inRange(ball) )	ball.verticalBounce();
+			//if( lPaddle.inRange(ball) )	
+			ball.verticalBounce();
 			break;
 			
 		case HEADING_RIGHT:
-			if( rPaddle.inRange(ball) )	ball.verticalBounce();
+			//if( rPaddle.inRange(ball) )	
+			ball.verticalBounce();
 			break;
 		}
 		
@@ -106,33 +113,72 @@ public class PreciseCollisionDetection extends CollisionDetection {
 		
 	}
 	
+	private boolean handlePaddleCollision(Paddle paddle) {
+		
+		if(ballVelX*paddle.direction>0 && paddle.velX*paddle.direction<ballVelX*paddle.direction)
+			return false;
+		
+		float ballSize = ball.strokeWeight/2;
+		float paddleWidth = paddle.strokeWeight/2;
+		
+		float delta = (ball.x-ballSize*paddle.direction) - (paddle.x+paddleWidth*paddle.direction);
+		float t = delta / (paddle.velX/deltaTime - ballVelX);
+		if(t<0)
+			return false;
+		
+		float newPaddleX = paddle.x + t*paddle.velX;
+		float newPaddleY = paddle.y + t*paddle.velY;
+		float newBallY = ball.y + t*ballVelY;
+		
+		boolean collUp   = (newBallY-ballSize)>=newPaddleY-paddle.halfSize && (newBallY-ballSize)<=newPaddleY+paddle.halfSize;
+		boolean collDown = (newBallY+ballSize)>=newPaddleY-paddle.halfSize && (newBallY+ballSize)<=newPaddleY+paddle.halfSize;
+
+		if(collUp || collDown) {
+			remainingTime = t;
+			return true;
+		}
+		
+		return false;
+	}
+	
 	private void detectNextCollision(){
 		remainingTime = Float.MAX_VALUE;
 		
-		boolean positiveX = Math.cos(ball.heading) > 0;
-		boolean positiveY = Math.sin(ball.heading) > 0;
+		ballDirX = (float)(Math.cos(ball.heading));
+		ballDirY = (float)(Math.sin(ball.heading));
+		ballVelX = ballDirX*ball.velocity;
+		ballVelY = ballDirY*ball.velocity;
+		ballSignX = ballVelX<0?-1:1;
+		ballSignY = ballVelY<0?-1:1;
+		boolean positiveX = ballDirX > 0;
+		boolean positiveY = ballDirY > 0;
 		
 		Vector3D path = Vector3D.crossProduct(	new Vector3D(ball.x, ball.y, 1),
 						new Vector3D(ball.x + Math.cos(ball.heading),
 									ball.y + Math.sin(ball.heading),
 									1) );
+		//PADDLES
+		if(handlePaddleCollision(lPaddle))
+			heading = HEADING_LEFT;
+		if(handlePaddleCollision(rPaddle))
+			heading = HEADING_RIGHT;
 		
 		if( positiveX ){
 			if( acceptIfCloser(path, right) ){
 				heading = HEADING_RIGHT_OUT;
 			}
 			
-			if( ball.x < rPaddle.x - ball.strokeWeight && acceptIfCloser(path, rPaddleLine) ){
-				heading = HEADING_RIGHT;
-			}
+//			if( ball.x < rPaddle.x - ball.strokeWeight && acceptIfCloser(path, rPaddleLine) ){
+//				heading = HEADING_RIGHT;
+//			}
 		} else {
 			if( acceptIfCloser(path, left) ){
 				heading = HEADING_LEFT_OUT;
 			}
 			
-			if( ball.x > lPaddle.x + ball.strokeWeight && acceptIfCloser(path, lPaddleLine) ){
-				heading = HEADING_LEFT;
-			}
+//			if( ball.x > lPaddle.x + ball.strokeWeight && acceptIfCloser(path, lPaddleLine) ){
+//				heading = HEADING_LEFT;
+//			}
 		}
 		
 		if( positiveY ){ //  && !(ball.x < field.screenLeft || ball.x > field.screenRight) ){
@@ -155,7 +201,6 @@ public class PreciseCollisionDetection extends CollisionDetection {
 														(float)(hi.getY() / hi.getZ()));
 		float tmpTime = (float) ball.distance(intersection) / ball.velocity;
 		if( tmpTime < remainingTime){
-			nextHit = intersection;
 			remainingTime = tmpTime;
 			return true;
 		}
