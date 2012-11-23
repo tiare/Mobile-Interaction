@@ -86,8 +86,14 @@ public class PerfectAI extends ArtificialIntelligence{
 	private void traceBallPath(){
 		int abort = leftSide? HEADING_LEFT : HEADING_RIGHT; 
 		
-		if(false)
-		while( fakeBall.ballVelX*paddle.direction>0 && heading != abort ){
+		//if(false)
+		//fakeBall.ballVelX*paddle.direction>0 &&
+		int cycles = 0;
+		while(  heading != abort ){
+			if( ++cycles > 100){
+				System.out.println("to manny cycles, something went wrong\n prevent infinite loop ...");
+				break;
+			}
 			remainingTime = Float.MAX_VALUE;
 			
 			boolean positiveX = Math.cos(fakeBall.heading) > 0;

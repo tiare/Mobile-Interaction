@@ -12,14 +12,15 @@ import de.tub.mobint.assigment2.ai.SimpleAI;
 import de.tub.mobint.assigment2.collision.CollisionDetection;
 import de.tub.mobint.assigment2.collision.PreciseCollisionDetection;
 import de.tub.mobint.assigment2.gui.HandMarker;
+import de.tub.mobint.assigment2.gui.HandToPointerPositionAdapter;
 import de.tub.mobint.assigment2.gui.InfoText;
+import de.tub.mobint.assigment2.gui.ResetCommand;
 import de.tub.mobint.assigment2.gui.RingButton;
 import de.tub.mobint.assigment2.gui.icon.AiIcon;
-import de.tub.mobint.assigment2.gui.icon.BallFastIcon;
-import de.tub.mobint.assigment2.gui.icon.BallSlowIcon;
 import de.tub.mobint.assigment2.gui.icon.HandIcon;
 import de.tub.mobint.assigment2.gui.icon.KeyIcon;
 import de.tub.mobint.assigment2.gui.icon.MouseIcon;
+import de.tub.mobint.assigment2.gui.icon.ResetIcon;
 import de.tub.mobint.assigment2.paddle.AIPaddleController;
 import de.tub.mobint.assigment2.paddle.HandPaddleController;
 import de.tub.mobint.assigment2.paddle.KeyPaddleController;
@@ -65,6 +66,8 @@ public class Pong extends PApplet {
 	// Test
 	RingButton leftBallSpeedButton;
 	RingButton rightBallSpeedButton;
+	
+	RingButton resetButton;
 	
 	boolean deviceConnected;
 	
@@ -146,9 +149,14 @@ public class Pong extends PApplet {
 		
 		waitingUsers = new LinkedList<Integer>();
 		
-		//ballSpeedButton = new RingButton(this, new Point2D.Float(field.horizontalCenter,field.height-40.f), 25.f);
-		leftBallSpeedButton = new RingButton(this, new Point2D.Float(field.horizontalCenter-60,field.bottom+30), 30.0f,new BallFastIcon(this));
-		rightBallSpeedButton = new RingButton(this, new Point2D.Float(field.horizontalCenter+60,field.bottom+30), 30.0f,new BallSlowIcon(this));
+		resetButton = new RingButton(this, new Point2D.Float(field.horizontalCenter, field.bottom+30), 30.0f, new ResetIcon(this));
+		resetButton.setStayActive(false);
+		resetButton.setColor(this.color(0,0,255));
+		
+		user1.addRightHandPositionListener(new HandToPointerPositionAdapter( resetButton ));
+		user2.addLeftHandPositionListener(new HandToPointerPositionAdapter(resetButton));
+		
+		resetButton.addButtonActivationListener(new ResetCommand(this, resetButton));
 
 	}
 	
@@ -245,8 +253,7 @@ public class Pong extends PApplet {
 		// draw ball
 		ball.draw();
 		
-		leftBallSpeedButton.draw(dT);
-		rightBallSpeedButton.draw(dT);
+		resetButton.draw(dT);
 	}
 	
 	public void update(float dT){
@@ -357,6 +364,11 @@ public class Pong extends PApplet {
 		}
 	}
 
+	public void resetGame(){
+		user1.score = 0;
+		user2.score = 0;
+		resetBall(true);
+	}
 	
 	public static void main(String args[]) {
 		//PApplet.main(new String[] { "--present", "de.tub.mobint.assigment2.Pong" });

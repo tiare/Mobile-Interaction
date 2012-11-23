@@ -4,26 +4,24 @@ import java.awt.geom.Point2D;
 
 import processing.core.PApplet;
 
-public class AiIcon extends Icon {
+public class ResetIcon extends Icon {
 
 	boolean active = false;
-	public AiIcon(PApplet parent) {
+	public ResetIcon(PApplet parent) {
 		super(parent);
 	}
 
 	@Override
 	public void draw( Point2D.Float pos) {
-		
-
 		parent.strokeWeight(1);
-		parent.stroke(255, active? 255 : 170);
+		parent.stroke(255, active? 255 : 255);
 		parent.noFill();
-		//pc
-		parent.rect(pos.x-6, pos.y+1, 12, 5);
-		parent.rect(pos.x-3, pos.y-7, 6, 6);
+		//0:0
+		parent.rect(pos.x-6, pos.y-4, 4, 8);
+		parent.rect(pos.x+2, pos.y-4, 4, 8);
 		
-		parent.line(pos.x+4, pos.y+3, pos.x+4, pos.y+5);
-		parent.line(pos.x+2, pos.y+3, pos.x+2, pos.y+5);
+		parent.point(pos.x, pos.y - 2);
+		parent.point(pos.x, pos.y + 2);
 		
 	}
 

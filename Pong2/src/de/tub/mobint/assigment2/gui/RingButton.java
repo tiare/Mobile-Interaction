@@ -24,6 +24,7 @@ public class RingButton implements PointerPositionListener {
 	int threshold = 100;
 	
 	boolean active = false;
+	boolean stayActive = true;
 	
 	boolean pointerInside = false;
 	
@@ -115,9 +116,21 @@ public class RingButton implements PointerPositionListener {
 	}
 	
 	public void activate(){
-		hoverTime = threshold;
-		icon.activate();
-		active = true;
+		if( stayActive ){
+			hoverTime = threshold;
+			icon.activate();
+			active = true;
+		} else {
+			hoverTime = 0;
+		}
+	}
+	
+	public void setStayActive(boolean stayActive){
+		this.stayActive = stayActive;
+	}
+	
+	public void setColor(int color){
+		this.color = color;
 	}
 	
 	public void pointerPositionChanged(Point2DDepth pos){
