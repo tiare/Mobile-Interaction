@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Random;
 
 import processing.core.PApplet;
 import SimpleOpenNI.SimpleOpenNI;
@@ -52,6 +53,9 @@ public class Pong extends PApplet {
 	float timeout;
 	int collisionScore;
 	boolean player1;
+	
+	float pi;
+	Random randomGenerator;
 
 	User user1;
 	User user2;
@@ -190,8 +194,13 @@ public class Pong extends PApplet {
 //		ball.setLocation( p1 ? field.left + margin*0.5f : field.right - margin*0.5f,
 //				p1 ? lPaddle.getY() : rPaddle.getY());
 		ball.setLocation(new Point(field.horizontalCenter,field.verticalCenter));
-		float pi = processing.core.PConstants.PI;
-		ball.heading = p1 ? pi/4.0f : pi-pi/4.0f;
+		
+		randomGenerator = new Random();
+		float randomFactor = randomGenerator.nextFloat();
+		if (randomGenerator.nextBoolean() == true)	randomFactor *= -1;
+		
+		pi = processing.core.PConstants.PI;
+		ball.heading = p1 ? (pi/4.0f)*randomFactor : pi-(pi/4.0f)*randomFactor;
 		ball.out = false;
 		ball.velocity = ballVelocity + ballSpeedIncrease;
 		ballSpeedIncrease += ballSpeedStepSize;
