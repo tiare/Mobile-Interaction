@@ -54,6 +54,8 @@ public class Pong extends PApplet {
 	int collisionScore;
 	boolean player1;
 	
+	boolean skipStep = false;
+	
 	float pi;
 	Random randomGenerator;
 
@@ -291,10 +293,15 @@ public class Pong extends PApplet {
 		if (collisionScore != 0)
 			resetBall(player1);
 		
-		int collision = collisionDetection.update(dT);
+		int collision = 0;
+		if(!skipStep)
+			collision = collisionDetection.update(dT);
+		else
+			skipStep = false;
 		collisionScore = collision;
 		if (collisionScore != 0) {
 			timeout = resetTimeout;
+			skipStep = true;
 		}
 		
 		if(collisionScore > 0){
