@@ -28,13 +28,13 @@ import de.tub.mobint.assigment2.paddle.KeyPaddleController;
 import de.tub.mobint.assigment2.paddle.MousePaddleController;
 import de.tub.mobint.assigment2.paddle.Paddle;
 
+/**
+ * @author Marcel Karsten (343619), Tiare Feuchtner (343302), Andreas Fender (319716), Jonas Willaredt (314683), Alexander Biskupski (306282)
+ */
 public class Pong extends PApplet {
 
 	private OpenNiControlRecognition onicr;
 	
-	/**
-	 * @author Marcel Karsten (343619), Tiare Feuchtner (343...)
-	 */
 	private static final long serialVersionUID = 1L;
 
 	int width = 640;
