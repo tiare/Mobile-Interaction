@@ -15,7 +15,6 @@ public class Ball extends Point2D.Float {
 	
 	public boolean out = false;
 	public float heading;
-	
 	public float bounceSpeedX;
 	public float bounceSpeedY;
 	public float ballVelX,ballVelY;
@@ -61,6 +60,44 @@ public class Ball extends Point2D.Float {
 			transparency -= step;
 			parent.stroke(255,0,0,transparency);
 			parent.point(lb.x, lb.y);
+		}
+	}
+	
+	public void drawLostBall(float timeout, float resetTimeout){		
+		
+		if (timeout < 3*resetTimeout/4) {
+			//8-neighbor
+			parent.strokeWeight(strokeWeight);
+			parent.stroke(255, 0, 0, 122.0f);
+			parent.point(x+5, y);
+			parent.point(x-5, y);
+			parent.point(x, y+5);
+			parent.point(x, y-5);
+			parent.point(x+5, y+5);
+			parent.point(x+5, y-5);
+			parent.point(x-5, y+5);
+			parent.point(x-5, y-5);
+		}
+		
+		if (timeout < resetTimeout/2) {
+			//4-neighbor
+			parent.strokeWeight(strokeWeight);
+			parent.stroke(252, 115, 5, 150.0f);
+			parent.point(x+5, y);
+			parent.point(x-5, y);
+			parent.point(x, y+5);
+			parent.point(x, y-5);
+		}
+				
+		//center point
+		parent.strokeWeight(strokeWeight);
+		parent.stroke(252, 197, 5, 200);
+		parent.point(x, y);
+		
+		if (timeout < resetTimeout/4) {
+			parent.strokeWeight(strokeWeight);
+			parent.stroke(70, 37, 27, 200);
+			parent.point(x, y);
 		}
 	}
 	

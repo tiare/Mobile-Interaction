@@ -40,11 +40,18 @@ public class Pong extends PApplet {
 	int height = 480;
 	
 	float ballVelocity; // px/s
+	float ballSpeedIncrease = 0;
+	float ballSpeedStepSize = 20.0f;
 	float fps = 30.0f;
 	
 	int margin = 50;
 	
 	int scoreSize = 40;
+	
+	float resetTimeout = 0.8f;
+	float timeout;
+	int collisionScore;
+	boolean player1;
 
 	User user1;
 	User user2;
@@ -103,6 +110,9 @@ public class Pong extends PApplet {
 		resetBall(false);
 
 		collisionDetection = new PreciseCollisionDetection(ball, field, lPaddle, rPaddle);
+		timeout = 0;
+		collisionScore = 0;
+		player1 = false;
 		
 		// hold references to update on mouse or keyboard action
 		mousePC = new MousePaddleController(lPaddle,new MouseIcon(this));
@@ -183,7 +193,8 @@ public class Pong extends PApplet {
 		float pi = processing.core.PConstants.PI;
 		ball.heading = p1 ? pi/4.0f : pi-pi/4.0f;
 		ball.out = false;
-		ball.velocity = ballVelocity;
+		ball.velocity = ballVelocity + ballSpeedIncrease;
+		ballSpeedIncrease += ballSpeedStepSize;
 	}
 	
 	private void render(float dT){
@@ -253,6 +264,10 @@ public class Pong extends PApplet {
 		// draw ball
 		ball.draw();
 		
+		//draw lost ball when reached outer border
+		if(collisionScore != 0 && timeout >= 0)
+			ball.drawLostBall(timeout, resetTimeout);
+		
 		resetButton.draw(dT);
 	}
 	
@@ -260,13 +275,27 @@ public class Pong extends PApplet {
 		user1.update(dT);
 		user2.update(dT);
 		
+		if (timeout > 0) {
+			timeout -= dT;
+			return;
+		}
+		if (collisionScore != 0)
+			resetBall(player1);
+		
 		int collision = collisionDetection.update(dT);
-		if( collision > 0){
+		collisionScore = collision;
+		if (collisionScore != 0) {
+			timeout = resetTimeout;
+		}
+		
+		if(collisionScore > 0){
 			user1.score++;
-			resetBall(true);
-		} else if(collision < 0){
+			player1 = true;
+			//resetBall(true);
+		} else if(collisionScore < 0){
 			user2.score++;
-			resetBall(false);
+			player1 = false;
+			//resetBall(false);
 		}
 	}
 	
@@ -367,6 +396,7 @@ public class Pong extends PApplet {
 	public void resetGame(){
 		user1.score = 0;
 		user2.score = 0;
+		ballSpeedIncrease = 0;
 		resetBall(true);
 	}
 	
