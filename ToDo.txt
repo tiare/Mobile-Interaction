@@ -10,8 +10,8 @@ Pong 2
 
 Team-Info (für die Doku)
 ---------
-Andreas (319716)
-Alex (306282)
-Jonas (314683)
+Andreas Fender (319716)
+Alex Biskupski (306282)
+Jonas Willaredt (314683)
 Marcel Karsten (343619)
 Tiare Feuchtner (343302)
