@@ -43,6 +43,7 @@ public class Pong extends PApplet {
 	float ballVelocity; // px/s
 	float ballSpeedIncrease = 0;
 	float ballSpeedStepSize = 20.0f;
+	float maxBallVelocity = 400;
 	float fps = 30.0f;
 	
 	int margin = 50;
@@ -205,6 +206,7 @@ public class Pong extends PApplet {
 		ball.heading = p1 ? (pi/4.0f)*randomFactor : pi-(pi/4.0f)*randomFactor;
 		ball.out = false;
 		ball.velocity = ballVelocity + ballSpeedIncrease;
+		if (ball.velocity > maxBallVelocity) ball.velocity = maxBallVelocity;
 		ballSpeedIncrease += ballSpeedStepSize;
 	}
 	
