@@ -1,0 +1,32 @@
+MPI Assignment #2 by :
+	Alexander Biskupski (306282),
+	Andreas Fender (319716),
+	Tiare Feuchtner (343302),
+	Marcel Karsten (343619)
+	Jonas Willaredt (314683)
+	
+
+We implemented Pong with following features:
+- Optional NUI gameplay with auto calibration (game entirely operable with NUI)
+- Dynamic ball control (fast/slow hit)
+- Optional artificial intelligence for both paddles
+- Scoreboard
+- Influence drift on ball by moving the paddle when it hits the ball. 
+- Continuous collision detection used for collisions and AI
+
+Gameplay:
+Initially the left paddle can be moved by the mouse, the right paddle has artificial intelligence enabled. 
+To change either side to another mode (NUI, AI, mouse, keyboard) the user has to put the hand icon on the corresponding button for two seconds. He can do this with the mouse or with his hand after the camera recognized him.
+When a new player enters the game he is automatically on the left side, the next player is on the right side. If another player is detected, he will be in the waiting queue until one of the other players left the game.
+The speed of the ball increases continuously. The rules are the well-known pong rules.
+
+NUI controls:
+Users can move the paddles by raising/lowering their hand to the desired paddle position. The left player controls the left paddle with his left hand, the right paddle can be controlled by the right hand of the right user. 
+The users can also change the x-position of the paddle to control the speed of the ball by hard or soft hits.
+To change the settings users can control their hand icon with their right hand.
+
+Keyboard controls:
+The left paddle can be moved by pressing q/a for up/down, the right paddle by pressing o/l
+To increase/decrease ball speed press +/-
+To increase/decrease frame rate press * / /
+
