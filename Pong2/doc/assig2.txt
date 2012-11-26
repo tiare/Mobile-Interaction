@@ -34,3 +34,4 @@ The left paddle can be moved by pressing q/a for up/down, the right paddle by pr
 To increase/decrease ball speed press +/-
 To increase/decrease frame rate press * / /
 
+
