@@ -7,20 +7,22 @@ MPI Assignment #2 by :
 	
 
 We implemented Pong with following features:
-- Optional NUI gameplay with auto calibration (game entirely operable with NUI)
-- Dynamic ball control (fast/slow hit)
+- NUI gameplay with auto calibration (game and menus entirely operable with NUI)
+- Dynamic ball control (increase/decrease ball speed with fast/slow hit)
 - Optional artificial intelligence for both paddles
 - Scoreboard
-- Influence drift on ball by moving the paddle when it hits the ball. 
+- Influence the ball's drift by movement of the paddle when it hits the ball. 
 - Continuous collision detection used for collisions and AI
 - Varying starting angle of the ball at hit-off
-- Possibility to restart game (0:0)-Button at the bottom
+- Possibility to restart game: (0:0)-Button at the bottom
+- Ball speed increase after each round
+- Randomized hit-off angle of the ball at the start of each round
 
 Gameplay:
 Initially the left paddle can be moved by the mouse, the right paddle has artificial intelligence enabled. 
 To change either side to another mode (NUI, AI, mouse, keyboard) the user has to put the hand icon on the corresponding button for two seconds. He can do this with the mouse or with his hand after the camera recognized him.
-When a new player enters the game he is automatically on the left side, the next player is on the right side. If another player is detected, he will be in the waiting queue until one of the other players left the game.
-The speed of the ball increases after each round. The rules are the well-known pong rules.
+When the first player enters the game he is automatically on the left side, the next player is on the right side. If another player is detected, he will be in the waiting queue until one of the other players leaves the game.
+The rules are the well-known pong rules.
 
 NUI controls:
 Users can move the paddles by raising/lowering their hand to the desired paddle position. The left player controls the left paddle with his left hand, the right paddle can be controlled by the right hand of the right user. 
