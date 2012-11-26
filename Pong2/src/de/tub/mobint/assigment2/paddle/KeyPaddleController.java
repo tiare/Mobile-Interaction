@@ -21,7 +21,7 @@ public class KeyPaddleController extends PaddleController {
 			float x;
 			if( paddle.side == Paddle.LEFT_SIDE )	x = paddle.bounds.left;
 			else									x = paddle.bounds.right;
-			paddle.updatePosition(x, paddle.y + velocity * movement * dT , !(this instanceof AIPaddleController));
+			paddle.updatePosition(x, paddle.y + velocity * movement * dT );
 		}
 	}
 	

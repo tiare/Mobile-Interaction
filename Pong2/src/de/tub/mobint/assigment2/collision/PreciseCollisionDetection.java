@@ -58,22 +58,25 @@ public class PreciseCollisionDetection extends CollisionDetection {
 	@Override
 	public int update(float dT) {
 		
-		lPaddleLine = lPaddle.getLine(ball.strokeWeight*0.5f);
-		rPaddleLine = rPaddle.getLine(-ball.strokeWeight*0.5f);
-		detectNextCollision();
+		if( !ball.isLost ){
 		
-		deltaTime = dT;
-		
-		while( remainingTime < dT ){
-			ball.update(remainingTime);
-			dT -= remainingTime;
-			int score = bounce();
-			
-			if( score != 0){
-				return score;
-			}
-			
+			lPaddleLine = lPaddle.getLine(ball.strokeWeight*0.5f);
+			rPaddleLine = rPaddle.getLine(-ball.strokeWeight*0.5f);
 			detectNextCollision();
+			
+			deltaTime = dT;
+			
+			while( remainingTime < dT ){
+				ball.update(remainingTime);
+				dT -= remainingTime;
+				int score = bounce();
+				
+				if( score != 0){
+					return score;
+				}
+				
+				detectNextCollision();
+			}
 		}
 		//remainingTime -= dT;
 		ball.update(dT);

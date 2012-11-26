@@ -91,7 +91,7 @@ public class PerfectAI extends ArtificialIntelligence{
 		int cycles = 0;
 		while(  heading != abort ){
 			if( ++cycles > 100){
-				System.out.println("to manny cycles, something went wrong\n prevent infinite loop ...");
+				//System.out.println( this.getClass().getName() + ": to manny cycles, something went wrong\n prevent infinite loop ...");
 				break;
 			}
 			remainingTime = Float.MAX_VALUE;

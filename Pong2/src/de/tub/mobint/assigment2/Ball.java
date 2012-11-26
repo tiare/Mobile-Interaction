@@ -21,6 +21,10 @@ public class Ball extends Point2D.Float {
 	public float ballDirX,ballDirY;
 	public float velocity = 160.0f;
 	
+	public boolean isLost = false;
+	public float resetTimeout = 0.8f;
+	private float timeout = 0.0f;
+	
 	LinkedList<Point2D.Float> tail;
 	int tailLength = 5;
 	
@@ -61,11 +65,17 @@ public class Ball extends Point2D.Float {
 			parent.stroke(255,0,0,transparency);
 			parent.point(lb.x, lb.y);
 		}
+		
+		if( isLost ) drawLostBall();
 	}
 	
-	public void drawLostBall(float timeout, float resetTimeout){		
-		
-		if (timeout < 3*resetTimeout/4) {
+	public void explode(){
+		isLost = true;
+		timeout = resetTimeout;
+	}
+	
+	public void drawLostBall(){
+		if (timeout < resetTimeout*0.75f) {
 			//8-neighbor
 			parent.strokeWeight(strokeWeight);
 			parent.stroke(255, 0, 0, 122.0f);
@@ -102,9 +112,16 @@ public class Ball extends Point2D.Float {
 	}
 	
 	public void update(float dT){
-		updateSpeed();
-		x += Math.cos(heading)*velocity*dT;
-		y += Math.sin(heading)*velocity*dT;
+		if( !isLost ){
+			updateSpeed();
+			x += Math.cos(heading)*velocity*dT;
+			y += Math.sin(heading)*velocity*dT;
+		} else {
+			timeout -= dT;
+			if(timeout <= 0){
+				isLost = false;
+			}
+		}
 	}
 	
 	public int bottom(){
@@ -142,7 +159,7 @@ public class Ball extends Point2D.Float {
 				velocity=170;
 		}else{
 			ballVelX = newVelX;
-			ballVelY+=bounceSpeedY*0.2f;
+			ballVelY+=bounceSpeedY*0.32f;
 			velocity=(float) Math.sqrt(ballVelX*ballVelX+ballVelY*ballVelY);
 			if (ballVelY>0)	
 				heading=(float)Math.acos(ballVelX/velocity);

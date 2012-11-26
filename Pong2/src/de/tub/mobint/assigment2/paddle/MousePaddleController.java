@@ -13,7 +13,7 @@ public class MousePaddleController extends PaddleController {
 
 	@Override
 	public void update(float dT) {
-		paddle.updatePosition(x, y, true);
+		paddle.updateVelocity(x, y);
 
 	}
 
