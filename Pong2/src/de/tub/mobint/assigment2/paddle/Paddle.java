@@ -19,7 +19,7 @@ public class Paddle extends Point2D.Float{
 	public int strokeWeight = 10;
 	int color = 255;
 	
-	public int halfSize = 34;
+	public int halfSize = 45;
 	
 	float heading = 0;
 	public int direction;
