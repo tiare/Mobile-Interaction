@@ -48,23 +48,22 @@ public class Paddle extends Point2D.Float{
 		parent.line(x,y + halfSize, x, y - halfSize);
 	}
 	
-	public void updatePosition(float x, float y,boolean computeSpeed){
-		if(computeSpeed) {
-			float newX = x;
-			if( newX > bounds.right) newX = bounds.right;
-			if( newX < bounds.left ) newX = bounds.left;
-			float newY = y;
-			if( newY + halfSize > bounds.bottom ) newY = bounds.bottom - halfSize;
-			if( newY - halfSize < bounds.top ) newY = bounds.top + halfSize;
-			velX = newX - this.x;
-			velY = newY - this.y;
-		}else{
-			this.x = x;
-			this.y = y;
-			velX = 0;
-			velY = 0;
-		}
-		
+	public void updateVelocity( float x, float y ){
+		float newX = x;
+		if( newX > bounds.right) newX = bounds.right;
+		if( newX < bounds.left ) newX = bounds.left;
+		float newY = y;
+		if( newY + halfSize > bounds.bottom ) newY = bounds.bottom - halfSize;
+		if( newY - halfSize < bounds.top ) newY = bounds.top + halfSize;
+		velX = newX - this.x;
+		velY = newY - this.y;
+	}
+	
+	public void updatePosition(float x, float y){
+		this.x = x;
+		this.y = y;
+		velX = 0;
+		velY = 0;
 		considerBounds();
 	}
 	
@@ -94,6 +93,8 @@ public class Paddle extends Point2D.Float{
 	public void move() {
 		this.x += velX;
 		this.y += velY;
+		
+		considerBounds();
 	}
 
 }

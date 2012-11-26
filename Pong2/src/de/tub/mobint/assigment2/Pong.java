@@ -49,10 +49,7 @@ public class Pong extends PApplet {
 	int margin = 50;
 	
 	int scoreSize = 40;
-	
-	float resetTimeout = 0.8f;
-	float timeout;
-	int collisionScore;
+
 	boolean player1;
 	
 	boolean skipStep = false;
@@ -68,6 +65,9 @@ public class Pong extends PApplet {
 		
 	Field field;
 	Ball ball;
+	
+	boolean resetNeeded = true;
+	
 	Paddle lPaddle;
 	Paddle rPaddle;
 	
@@ -114,11 +114,9 @@ public class Pong extends PApplet {
 		lPaddle = new Paddle(this, field.left, field.verticalCenter, 1, field.getLeftArea(ball.strokeWeight));
 		rPaddle = new Paddle(this, field.right, field.verticalCenter, -1, field.getRightArea(ball.strokeWeight));
 		
-		resetBall(false);
+		//resetBall(false);
 
 		collisionDetection = new PreciseCollisionDetection(ball, field, lPaddle, rPaddle);
-		timeout = 0;
-		collisionScore = 0;
 		player1 = false;
 		
 		// hold references to update on mouse or keyboard action
@@ -277,10 +275,6 @@ public class Pong extends PApplet {
 		// draw ball
 		ball.draw();
 		
-		//draw lost ball when reached outer border
-		if(collisionScore != 0 && timeout >= 0)
-			ball.drawLostBall(timeout, resetTimeout);
-		
 		resetButton.draw(dT);
 	}
 	
@@ -288,32 +282,21 @@ public class Pong extends PApplet {
 		user1.update(dT);
 		user2.update(dT);
 		
-		if (timeout > 0) {
-			timeout -= dT;
-			return;
+		int collision = collisionDetection.update(dT);
+		if( collision != 0){
+			resetNeeded = true;
+			ball.explode();
 		}
-		if (collisionScore != 0)
-			resetBall(player1);
-		
-		int collision = 0;
-		if(!skipStep)
-			collision = collisionDetection.update(dT);
-		else
-			skipStep = false;
-		collisionScore = collision;
-		if (collisionScore != 0) {
-			timeout = resetTimeout;
-			skipStep = true;
-		}
-		
-		if(collisionScore > 0){
+		if(collision > 0){
 			user1.score++;
 			player1 = true;
-			//resetBall(true);
-		} else if(collisionScore < 0){
+		} else if(collision < 0){
 			user2.score++;
 			player1 = false;
-			//resetBall(false);
+		}
+		if( !ball.isLost && resetNeeded ){
+			resetNeeded = false;
+			resetBall(player1);
 		}
 	}
 	
