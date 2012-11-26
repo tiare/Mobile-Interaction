@@ -159,7 +159,7 @@ public class Ball extends Point2D.Float {
 				velocity=170;
 		}else{
 			ballVelX = newVelX;
-			ballVelY+=bounceSpeedY*0.2f;
+			ballVelY+=bounceSpeedY*0.32f;
 			velocity=(float) Math.sqrt(ballVelX*ballVelX+ballVelY*ballVelY);
 			if (ballVelY>0)	
 				heading=(float)Math.acos(ballVelX/velocity);
