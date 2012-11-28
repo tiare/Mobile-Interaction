@@ -2,8 +2,6 @@ package de.tub.mobint.assignment3;
 
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 
 import processing.core.PApplet;
 
@@ -26,13 +24,17 @@ public class Evaluator extends PApplet {
 	
 	boolean nextHitLeft;
 	
+	Result result;
+	
 	
 	public Evaluator() {
-		// TODO Auto-generated constructor stub
-		
 		trials = new ArrayList<Trial>();
-		trials.add( new Trial(this, 10,100) );
+		trials.add( new Trial(this, 20,100) );
 		
+		trials.add( new Trial(this, 100,300) );
+		
+		
+		result = new Result(this, trials);
 	}	
 	
 	@Override
@@ -65,6 +67,10 @@ public class Evaluator extends PApplet {
 		case EVALUATION_SCREEN:
 			trials.get(trialIndex).drawTest();
 			break;
+			
+		case RESULT_SCREEN:
+			result.draw();
+			break;
 		
 		}
 	}
@@ -93,6 +99,7 @@ public class Evaluator extends PApplet {
 		if( ++trialIndex < trials.size() ){
 			displayMode = COUNTDOWN_SCREEN;
 		} else {
+			result.linearRegression();
 			displayMode = RESULT_SCREEN;
 		}
 		 
