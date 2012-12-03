@@ -19,7 +19,7 @@ public class Evaluator extends PApplet {
 	InfoText startScreenText;
 	
 	ArrayList<Trial> trials;
-	int trialIndex = 0;
+	int trialIndex = -1;
 	
 	
 	boolean nextHitLeft;
@@ -98,17 +98,22 @@ public class Evaluator extends PApplet {
 	}
 	
 	public void stopTrial(){
-		if( ++trialIndex < trials.size() ){
+		//if( ++trialIndex < trials.size() )
 			displayMode = COUNTDOWN_SCREEN;
-		} else {
-			result.linearRegression();
-			displayMode = RESULT_SCREEN;
-		}
+		// else {
+			//result.linearRegression();
+			//displayMode = RESULT_SCREEN;
+		//}
 		 
 	}
 	
 	public void stopCountdown(){
-		displayMode = EVALUATION_SCREEN;
+		if( ++trialIndex < trials.size() )
+			displayMode = EVALUATION_SCREEN;
+		else {
+			result.linearRegression();
+			displayMode = RESULT_SCREEN;
+		}
 	}
 	
 	

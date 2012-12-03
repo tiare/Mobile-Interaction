@@ -49,6 +49,7 @@ public class Countdown {
 		
 		if( progress > 100 ){
 			parent.stopCountdown();
+			time = 0.0f;
 			return;
 		}
 		

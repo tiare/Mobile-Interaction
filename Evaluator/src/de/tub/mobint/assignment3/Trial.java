@@ -30,13 +30,14 @@ public class Trial {
 		errors = 0;
 		hits = 0;
 		
-		//duration = 10;
+		//duration = 10; //TODO: Make sure to change this!
 		duration = 5;
 	}
 	
 	public void stop(){
 		avgMovementTime = duration / hits;
 		indexOfDifficulty = Math.log(1.0+distance/width) / Math.log(2.0);
+		System.out.println("AvgMovement: " + avgMovementTime + " ID: " + indexOfDifficulty);
 	}
 	
 	public boolean testClick(int x, int y){
