@@ -21,6 +21,10 @@ public class Trial {
 	double avgMovementTime;
 	double indexOfDifficulty;
 	
+	int[] insetColor1 = {190, 190, 190};
+	int[] insetColor2 = {230, 230, 230};
+	//TODO: add more
+	
 	public Trial(Evaluator parent,int width, int distance) {
 		this.parent = parent;
 		this.width = width;
@@ -37,7 +41,6 @@ public class Trial {
 	public void stop(){
 		avgMovementTime = duration / hits;
 		indexOfDifficulty = Math.log(1.0+distance/width) / Math.log(2.0);
-		System.out.println("AvgMovement: " + avgMovementTime + " ID: " + indexOfDifficulty);
 	}
 	
 	public boolean testClick(int x, int y){
@@ -82,11 +85,39 @@ public class Trial {
 	public void drawTest(){
 		int leftCenter = parent.width/2 - distance/2;
 		int rightCenter = parent.width/2 + distance/2;
-		parent.strokeWeight(width);
-		parent.stroke(255);
-		parent.line(leftCenter,0,leftCenter,parent.height);
-		parent.line(rightCenter,0,rightCenter,parent.height);
 		
+		if( clicks.size() > 0) {
+			if ( nextHitLeft ){
+				//right bar inset	
+				parent.strokeWeight(width);
+				parent.stroke(255);
+				parent.line(leftCenter,0,leftCenter,parent.height);
+				
+				parent.stroke(insetColor1[0], insetColor1[1], insetColor1[2]);
+				parent.line(rightCenter,0,rightCenter,parent.height);
+				
+				parent.strokeWeight(width*0.9f);
+				parent.stroke(insetColor2[0], insetColor2[1], insetColor2[2]);
+				parent.line(rightCenter,0,rightCenter,parent.height);
+			}	else {
+				//left bar inset
+				parent.strokeWeight(width);
+				parent.stroke(255);
+				parent.line(rightCenter,0,rightCenter,parent.height);
+				
+				parent.stroke(insetColor1[0], insetColor1[1], insetColor1[2]);
+				parent.line(leftCenter,0,leftCenter,parent.height);
+				
+				parent.strokeWeight(width*0.9f);
+				parent.stroke(insetColor2[0], insetColor2[1], insetColor2[2]);
+				parent.line(leftCenter,0,leftCenter,parent.height);
+			}
+		} else {
+			parent.strokeWeight(width);
+			parent.stroke(255);
+			parent.line(leftCenter,0,leftCenter,parent.height);
+			parent.line(rightCenter,0,rightCenter,parent.height);
+		}
 		drawClicks();
 	}
 	

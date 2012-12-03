@@ -75,10 +75,13 @@ public class Result {
 		int margin = 20;
 		parent.pushMatrix();
 		
-		
-		
 		parent.scale(1,-1);		//flip across y axis
 		parent.translate(margin, -parent.height+margin); // place origin
+		
+		parent.stroke(0);
+		parent.strokeWeight(1);
+		parent.line(0, 0, parent.width - margin*2, 0);
+		parent.line(0, 0, 0, parent.height - margin*2 );
 		
 		//scale
 		//maxX/600 =  x/1;
@@ -89,40 +92,57 @@ public class Result {
 		float scale = (float)(scaleX < scaleY ? scaleX : scaleY);
 		
 		parent.scale(scale,scale);
+				
+//		parent.stroke(0);
+//		parent.strokeWeight(1);
+//		parent.line(0, 0, (float)Math.ceil(maxX+0.5), 0);
+//		parent.line(0, 0, 0, (float)Math.ceil(maxY+0.5) );
 		
-		
-		
-		parent.stroke(0);
-		parent.strokeWeight(1);
-		parent.line(0, 0, (float)Math.ceil(maxX), 0);
-		parent.line(0, 0, 0, (float)Math.ceil(maxY) );
-		
-		parent.fill(33);
-		parent.noStroke();
-		for( Trial trial : trials ){
-			parent.ellipse((float)trial.getID(), (float)trial.getAvgMT(), 8/scale, 8/scale);
-		}
-		
-		
-		parent.stroke(0);
-		parent.strokeWeight(1);
+//		parent.stroke(0);
+//		parent.strokeWeight(1);
+		parent.stroke(50, 50, 50);
+		parent.strokeWeight(2);
 		parent.line(0, (float)alpha, (float)maxX, (float)(alpha + maxX * beta));
 		
+		for( Trial trial : trials ){
+			parent.fill(33);
+			parent.noStroke();
+			parent.ellipse((float)trial.getID(), (float)trial.getAvgMT(), 8/scale, 8/scale);
+			
+			//Display ID and AvgMT values for each trial
+			parent.scale(1,-1); //Flip back to avoid upside down text
+			parent.textSize(15/scale);
+			parent.textAlign(PApplet.LEFT);
+			parent.fill(190, 10, 0);
+			float offset = 20/scale;
+			parent.text( "ID: " + (float)Math.round(trial.getID()*100)/100,
+					(float)trial.getID(), -(float)trial.getAvgMT()+offset);
+			parent.text( "AvgM: " + (float)Math.round(trial.getAvgMT()*100)/100, 
+					(float)trial.getID(), -(float)trial.getAvgMT()+2*offset);
+			parent.scale(1,-1);
+		}
 		
-		/*scaled text geht nicht, muss dann außerhalb gesetzt werden :/
-		 * parent.fill(0);
-		parent.textAlign(PApplet.RIGHT, PApplet.TOP);
-		parent.textSize(1/scale);
-		parent.text("feaafadkhlajkd", 3, 1);
-		*/
+		parent.scale(1/scale,-1/scale); //Unscale for fixed positions
+
+		//Write alpha and beta values
+		String infoText = "Alpha: " + (float)Math.round(alpha*100)/100 + ", Beta: " + (float)Math.round(beta*100)/100;
+		int[] infoTextColor = {0, 12, 153};
+		
+		parent.textSize(15);
+		parent.textAlign(PApplet.LEFT);
+		parent.fill(infoTextColor[0], infoTextColor[1], infoTextColor[2]);
+		parent.text(infoText, 0, margin);//-(float)parent.height/(2*scale));
+		
+		parent.stroke(0);
+		parent.strokeWeight(5);
+		//Label axes
+		parent.textAlign(PApplet.LEFT);
+		parent.fill(0);
+		parent.text("ID", parent.width-50, margin); //x-axis
+		parent.text("AvgMT", 5, -parent.height+50); //y-axis
+		
 		parent.popMatrix();
 		
-		
-		
-		
 	}
-	
-	
-	
 
 }
