@@ -25,6 +25,7 @@ public class Evaluator extends PApplet {
 	boolean nextHitLeft;
 	
 	Result result;
+	Countdown countdown;
 	
 	
 	public Evaluator() {
@@ -32,9 +33,6 @@ public class Evaluator extends PApplet {
 		trials.add( new Trial(this, 20,100) );
 		
 		trials.add( new Trial(this, 100,300) );
-		
-		
-		result = new Result(this, trials);
 	}	
 	
 	@Override
@@ -42,12 +40,15 @@ public class Evaluator extends PApplet {
 		size(screenWidth,screenHeight,P2D);
 		background(0xcc);
 		
+		smooth();
 		
 		startScreenText = new InfoText(this, 0,screenWidth/2, screenHeight/2 );
 		startScreenText.setText("Click to start");
 		startScreenText.align = CENTER;
 		startScreenText.countdown = -1;
 		
+		countdown = new Countdown(this);
+		result = new Result(this, trials);
 		
 	}
 	
@@ -61,7 +62,7 @@ public class Evaluator extends PApplet {
 			drawStart();
 			break;
 		case COUNTDOWN_SCREEN:
-			drawCountdown();
+			countdown.draw(1.0f/30.0f);
 			break;
 			
 		case EVALUATION_SCREEN:
@@ -88,7 +89,8 @@ public class Evaluator extends PApplet {
 		case START_SCREEN:
 			displayMode = COUNTDOWN_SCREEN;
 			break;
-			
+		case COUNTDOWN_SCREEN:
+			break;
 		case EVALUATION_SCREEN:
 			trials.get(trialIndex).testClick(mouseX, mouseY);
 			break;
@@ -105,7 +107,7 @@ public class Evaluator extends PApplet {
 		 
 	}
 	
-	private void drawCountdown(){
+	public void stopCountdown(){
 		displayMode = EVALUATION_SCREEN;
 	}
 	
