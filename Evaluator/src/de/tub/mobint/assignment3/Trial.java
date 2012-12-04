@@ -3,9 +3,12 @@ package de.tub.mobint.assignment3;
 import java.util.Stack;
 import java.util.Timer;
 
+import processing.core.PApplet;
+
 
 public class Trial {
 
+	int trialNumber = 0;
 	int width;
 	int distance;
 	public Stack<Click> clicks;
@@ -25,10 +28,11 @@ public class Trial {
 	int[] insetColor2 = {230, 230, 230};
 	//TODO: add more
 	
-	public Trial(Evaluator parent,int width, int distance) {
+	public Trial(Evaluator parent,int width, int distance, int trialNumber) {
 		this.parent = parent;
 		this.width = width;
 		this.distance = distance;
+		this.trialNumber = trialNumber;
 		
 		clicks = new Stack<Click>();
 		errors = 0;
@@ -83,6 +87,11 @@ public class Trial {
 	}
 
 	public void drawTest(){
+		parent.textSize(15);
+		parent.textAlign(PApplet.CENTER);
+		parent.fill(255);
+		parent.text( "Trial " + trialNumber, parent.width/2, 20);
+		
 		int leftCenter = parent.width/2 - distance/2;
 		int rightCenter = parent.width/2 + distance/2;
 		

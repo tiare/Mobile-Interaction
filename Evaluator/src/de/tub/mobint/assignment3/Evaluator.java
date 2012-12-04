@@ -30,9 +30,9 @@ public class Evaluator extends PApplet {
 	
 	public Evaluator() {
 		trials = new ArrayList<Trial>();
-		trials.add( new Trial(this, 20,100) );
+		trials.add( new Trial(this, 20,100,1) );
 		
-		trials.add( new Trial(this, 100,300) );
+		trials.add( new Trial(this, 100,300,2) );
 	}	
 	
 	@Override
