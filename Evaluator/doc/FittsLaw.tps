@@ -12,13 +12,13 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
 NormalPos.right=1008
-NormalPos.bottom=401
+NormalPos.bottom=349
 Class=LaTeXView
 Document=FittsLaw.tex
 
 [Frame0_View0,0]
-TopLine=57
-Cursor=2651
+TopLine=78
+Cursor=3782
 
 [SessionInfo]
 FrameCount=1

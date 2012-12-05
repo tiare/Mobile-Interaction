@@ -63,10 +63,32 @@
 \subsection{Fitts' Law Examples} 
 Driving a car --> hitting brake and accelerator (large pedal, small pedal, great distance)\\
 Blindly use keys on keyboard (large enter key, small enter key, large/small spaces)\\
-Pop-up menus/advertisement on websites (exit button always small, usually at an edge/bottom --> thus far away, always somewhere else, barely visible)
+Pop-up menus/advertisement on websites (exit button always small, usually at an edge/bottom --> thus far away, always somewhere else, barely visible), firefox back button, windows menu button
 
-Pointing example where Fits' Law does NOT apply: ???
+Pointing example where Fits' Law does NOT apply: ??? Wack-A-Mole (Game) - since the game's intention is to make it hard to hit the moles it will try to break with fitts' law, or where design does not permit it --> placing Reply and Delete button close to each other, because they are most often used, may lead to mistakes --> navigation panes with drop down menus cause more cursor movement, but significantly help keeping order and grouping elements to reduce cluttering - although it might impede a fluent workflow --> unlock cellphone by "complicated" swipe is a real stumble stone for fluid workflow, but it is meant to be, for only this way it can actually ensure unintensional unlocking.
+
 \subsection{Keyboard redesign} 
+Calculating the average movement time MT of pointing to the keyboard and then pointing to the call button.
+
+$MT_1$ ... average Movement Time (old design) \\
+$MT_2$ ... average Movement Time (new design) \\
+$W = 5$ ... target width (call button or center of keypad) \\
+$D_1 = 35$ ...  target distance (old design) \\
+$D_2 = 15$ ... target distance (new design) 
+
+$a$ ... start/stop time of device (intercept) \\
+$b$ ... inherent speed of device (slope) \\
+$ID$ ... index of difficulty
+
+General formula: \\
+$MT = a + b \cdot ID$ \\
+$MT = a + b \cdot log_2 (1 + \frac{D}{W})$ 
+
+Calculation: \\
+$MT_1 = a + b \cdot log_2 (1 + \frac{35}{5}) = a + b \cdot log_2(8) = a + 3b$ \\
+$MT_2 = a + b \cdot log_2 (1 + \frac{15}{5}) = a + b \cdot log_2(4) = a + 2b$ \\
+Result: $MT_2 = MT_1 - b$ \\
+The movement time difference between the two designs is $b$, which clearly rates the new design better.
 
 \section{Fitts' Law Evaluation}
 results of all 3 experiments --> screenshots of the 9 targets\\
