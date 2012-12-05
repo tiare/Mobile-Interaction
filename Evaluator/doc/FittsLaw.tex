@@ -1,0 +1,89 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HEADER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,twoside,10pt]{article}
+% Alternative Options:
+%	Paper Size: a4paper / a5paper / b5paper / letterpaper / legalpaper / executivepaper
+% Duplex: oneside / twoside
+% Base Font Size: 10pt / 11pt / 12pt
+
+%% Language %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[USenglish]{babel} %francais, polish, spanish, ...
+\usepackage[T1]{fontenc}
+
+%\usepackage[ansinew]{inputenc}
+\usepackage[utf8]{inputenc}	%supports Umlaute
+\usepackage{german, ngerman}
+\usepackage{eurosym}
+\usepackage{color}
+
+\usepackage{lmodern} %Type1-font for non-english texts and characters
+
+%% Packages for Graphics & Figures %%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx} %%For loading graphic files
+%\usepackage{subfig} %%Subfigures inside a figure
+%\usepackage{tikz} %%Generate vector graphics from within LaTeX
+
+%% Math Packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+
+%% Other Packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{a4wide} %%Smaller margins = more text per page.
+\usepackage{fancyhdr} %%Fancy headings
+%\usepackage{longtable} %%For tables, that exceed one page
+
+\usepackage[parfill]{parskip} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%\setlength{\parindent}{0pt} %kein Einzug beim Absatzbegin
+\pagestyle{fancyplain}
+
+%\title{Aufgabenblatt 3 - Trading Agent Competition} 
+%\author{Tiare Feuchtner, Marcel Karsten}
+%\date{Abgabetermin: 11.12.2011} %%If commented, the current date is used.
+%\maketitle
+
+\rhead{TU Berlin - MPI, WS2012/13}
+\lhead{Tiare Feuchtner, Marcel Karsten}
+\renewcommand{\headrulewidth}{0px}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+\huge{\textbf{Assignment 3 - Fitts' Law}}
+\end{center}
+\vspace{.5cm}
+
+\section{Fitts' Law Optimization} 
+\subsection{Fitts' Law Examples} 
+Driving a car --> hitting brake and accelerator (large pedal, small pedal, great distance)\\
+Blindly use keys on keyboard (large enter key, small enter key, large/small spaces)\\
+Pop-up menus/advertisement on websites (exit button always small, usually at an edge/bottom --> thus far away, always somewhere else, barely visible)
+
+Pointing example where Fits' Law does NOT apply: ???
+\subsection{Keyboard redesign} 
+
+\section{Fitts' Law Evaluation}
+results of all 3 experiments --> screenshots of the 9 targets\\
+Experiment 1: Touchpad --> Screenshot of result\\
+Experiment 2: Mouse --> Screenshot of result\\
+Experiment 3: Tablet / different User? --> Screenshot of result
+
+Table with results..
+
+%\subsection{Resultate}
+%Das Walverine-System vermag besonders am Anfang des Spiels sehr gute Ergebnisse zu erzielen. In den weiteren Biet-Runden fällt Walverine jedoch zurück, da die Algorithmen mit welchen gearbeitet wird, die Umweltfaktoren zu wenig berücksichtig. So sollte beispielsweise berücksichtigt werden dass die Agenten mit ihren Aktionen die Preise beeinflussen 
+
+\vspace{1cm}
+
+%\textbf{Referenz}\\
+%Shih-Fen Cheng Evan, Evan Leung, Kevin M. Lochner, Daniel M. Reeves, L. Julian Schvartzman,
+%and Michael P. Wellman. Walverine: A walrasian trading agent. In Second International
+%Joint Conference on Autonomous Agents and Multi-Agent Systems, pages 465–472, 2002.
+
+\end{document}
