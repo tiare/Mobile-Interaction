@@ -45,7 +45,7 @@ public class Result {
 		double avgYY=0.0;
 		
 		//Print out the info
-		System.out.println("Trial    D    W    ID    hits    errors    MT");
+		System.out.println("Trial\tD\tW\tID\thits\terrors\tMT");
 		double x,y;
 		for( Trial trial : trials){
 			x = trial.getID() - avgX;
@@ -66,11 +66,11 @@ public class Result {
 			squaredError += (fit - trial.getAvgMT() ) * ( fit - trial.getAvgMT()); 
 			
 			//Print out the info
-			System.out.println("  " + trial.trialNumber + "     " + trial.distance + "  " +  trial.width + "   " +  
-					(float)Math.round(trial.indexOfDifficulty*100)/100 +  "    " + trial.hits +  "       " + trial.errors +  
-					"      " + (float)Math.round(trial.avgMovementTime*100)/100);
+			System.out.println(trial.trialNumber + "\t" + trial.distance + "\t" +  trial.width + "\t" +  
+					(float)Math.round(trial.indexOfDifficulty*100)/100 +  "\t" + trial.hits +  "\t" + trial.errors +  
+					"\t" + (float)Math.round(trial.avgMovementTime*100)/100);
 		}
-//		squaredError = ssr / avgY;
+//		squaredError = ssr / avgYY;
 		
 		// whats e? (slide 8) --> forget e
 	}
@@ -111,27 +111,25 @@ public class Result {
 			parent.noStroke();
 			parent.ellipse((float)trial.getID(), (float)trial.getAvgMT(), 8/scale, 8/scale);
 			
-			//Display ID and AvgMT values for each trial
-			parent.scale(1,-1); //Flip back to avoid upside down text
-			parent.textSize(15/scale);
-			parent.textAlign(PApplet.LEFT);
-			parent.fill(190, 10, 0);
-			float offset = 20/scale;
-			parent.text(trial.trialNumber, (float)trial.getID(), -(float)trial.getAvgMT()+offset);
-//			parent.text( "ID: " + (float)Math.round(trial.getID()*100)/100,
-//					(float)trial.getID()+offset, -(float)trial.getAvgMT()+offset);
-//			parent.text( "AvgM: " + (float)Math.round(trial.getAvgMT()*100)/100, 
-//					(float)trial.getID()+offset, -(float)trial.getAvgMT()+2*offset);
-//			parent.text( "errors: " + trial.errors, 
-//					(float)trial.getID()+offset, -(float)trial.getAvgMT()+3*offset);
-			parent.scale(1,-1);
+			//Display index of each trial
+//			parent.scale(1,-1); //Flip back to avoid upside down text
+//			parent.textSize(15/scale);
+//			parent.textAlign(PApplet.LEFT);
+//			parent.fill(190, 10, 0);
+//			float offset = 20/scale;
+//			parent.text(trial.trialNumber, (float)trial.getID(), -(float)trial.getAvgMT()+offset);
+////			parent.text( "ID: " + (float)Math.round(trial.getID()*100)/100,
+////					(float)trial.getID()+offset, -(float)trial.getAvgMT()+offset);
+////			parent.text( "AvgM: " + (float)Math.round(trial.getAvgMT()*100)/100, 
+////					(float)trial.getID()+offset, -(float)trial.getAvgMT()+2*offset);
+////			parent.text( "errors: " + trial.errors, 
+////					(float)trial.getID()+offset, -(float)trial.getAvgMT()+3*offset);
+//			parent.scale(1,-1);
 		}
 		
 		parent.scale(1/scale,-1/scale); //Unscale for fixed positions
 
 		//Write alpha and beta values, IP and err^2
-//		String infoText = "alpha: " + (float)Math.round(alpha*10000)/10000 + ", beta: " + (float)Math.round(beta*10000)/10000 + 
-//				", err^2: " + (float)Math.round(squaredError*10000)/10000 + ", IP: " + (float)Math.round(indexOfPerformance*10000)/10000;
 		int[] infoTextColor = {0, 12, 153};
 		
 		parent.textSize(15);

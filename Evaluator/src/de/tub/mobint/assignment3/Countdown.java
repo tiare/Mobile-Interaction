@@ -5,7 +5,7 @@ public class Countdown {
 	Evaluator parent;
 	
 	float time = 0.0f;
-	float duration = 5.0f;
+	float duration = 3.0f;
 	int color;
 	
 	int x;

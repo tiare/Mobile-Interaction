@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.12.5)  5 DEC 2012 22:31
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.12.5)  11 DEC 2012 00:33
 entering extended mode
 **FittsLaw.tex
 ("E:\Dropbox\TUB\Semester 3\Mobile Interaction\exercise\Mobile-Interaction\Evaluator\doc\FittsLaw.tex"
@@ -499,63 +499,123 @@ File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 \makeMPintoPDFobject=\count106
 \everyMPtoPDFconversion=\toks29
 )
-ngerman: "ck is now obsolete, please use ck instead on input line 68.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 73.
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\ot1lmr.fd"
+
+LaTeX Warning: Reference `jaws' on page 1 undefined on input line 66.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 64--67
+
+ []
+
+
+
+pdfTeX warning: pdflatex.exe (file E:/Dropbox/TUB/Semester 3/Mobile Interaction/exercise/Mobile-Interaction/Evaluator/do
+c/firefox.pdf): PDF inclusion: found PDF version <1.6>, but at most version <1.5> allowed
+<firefox.pdf, id=1, 285.3561pt x 183.71635pt>
+File: firefox.pdf Graphic file (type pdf)
+ <use firefox.pdf>
+Package pdftex.def Info: firefox.pdf used on input line 70.
+(pdftex.def)             Requested size: 212.29312pt x 136.68242pt.
+
+
+LaTeX Warning: Reference `jaws' on page 1 undefined on input line 71.
+
+
+LaTeX Warning: Reference `azu' on page 1 undefined on input line 75.
+
+
+
+pdfTeX warning: pdflatex.exe (file E:/Dropbox/TUB/Semester 3/Mobile Interaction/exercise/Mobile-Interaction/Evaluator/do
+c/context_menu.pdf): PDF inclusion: found PDF version <1.6>, but at most version <1.5> allowed
+<context_menu.pdf, id=2, 428.60126pt x 208.78pt>
+File: context_menu.pdf Graphic file (type pdf)
+ <use context_menu.pdf>
+Package pdftex.def Info: context_menu.pdf used on input line 78.
+(pdftex.def)             Requested size: 169.8319pt x 82.72682pt.
+
+
+pdfTeX warning: pdflatex.exe (file E:/Dropbox/TUB/Semester 3/Mobile Interaction/exercise/Mobile-Interaction/Evaluator/do
+c/pie_textbox.pdf): PDF inclusion: found PDF version <1.6>, but at most version <1.5> allowed
+<pie_textbox.pdf, id=3, 428.55107pt x 208.7499pt>
+File: pie_textbox.pdf Graphic file (type pdf)
+ <use pie_textbox.pdf>
+Package pdftex.def Info: pie_textbox.pdf used on input line 84.
+(pdftex.def)             Requested size: 169.8319pt x 82.72446pt.
+
+
+LaTeX Warning: Reference `azu' on page 1 undefined on input line 85.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
+
+ <E:/Dropbox/TUB/Semester 3/Mobile Interaction/exercise/Mobile-Interaction/Evaluator/doc/firefox.pdf> <E:/Dropbox/TUB/Se
+mester 3/Mobile Interaction/exercise/Mobile-Interaction/Evaluator/doc/context_menu.pdf>]
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 96.
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\ot1lmr.fd"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 73.
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\omllmm.fd"
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 96.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\omllmm.fd"
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 73.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 96.
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\omslmsy.fd"
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 73.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\omxlmex.fd"
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 96.
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\omxlmex.fd"
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 73.
+(Font)              <10> on input line 96.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 73.
+(Font)              <7> on input line 96.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 73.
-LaTeX Font Info:    Try loading font information for U+msa on input line 73.
+(Font)              <5> on input line 96.
+LaTeX Font Info:    Try loading font information for U+msa on input line 96.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 73.
+LaTeX Font Info:    Try loading font information for U+msb on input line 96.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-Underfull \vbox (badness 1424) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 117--119
 
- [1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
+ []
 
-] [2] ("E:\Dropbox\TUB\Semester 3\Mobile Interaction\exercise\Mobile-Interaction\Evaluator\doc\FittsLaw.aux") ) 
+[2 <E:/Dropbox/TUB/Semester 3/Mobile Interaction/exercise/Mobile-Interaction/Evaluator/doc/pie_textbox.pdf>] [3]
+("E:\Dropbox\TUB\Semester 3\Mobile Interaction\exercise\Mobile-Interaction\Evaluator\doc\FittsLaw.aux")
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3100 strings out of 494045
- 39597 string characters out of 3145969
- 97068 words of memory out of 3000000
- 6312 multiletter control sequences out of 15000+200000
- 37655 words of font info for 38 fonts, out of 3000000 for 9000
+ 3123 strings out of 494045
+ 39952 string characters out of 3145969
+ 98092 words of memory out of 3000000
+ 6331 multiletter control sequences out of 15000+200000
+ 40650 words of font info for 39 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 27i,11n,43p,721b,226s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Progr
-am Files (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-math
-sy.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvip
-s/lm/lm-ec.enc}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fo
-nts/type1/public/lm/lmmi10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi7.pfb><C:/Program Files (x86
-)/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><C:/Progr
-am Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb>
-Output written on FittsLaw.pdf (2 pages, 99055 bytes).
+ 27i,11n,43p,987b,232s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips
+/lm/lm-mathsy.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files (x86)/MiKTeX 2.9/fon
+ts/enc/dvips/lm/lm-ec.enc}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.pfb><C:/Program Files (x86)/Mi
+KTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Progra
+m Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr10.
+pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/pub
+lic/lm/lmsy10.pfb>
+Output written on FittsLaw.pdf (3 pages, 257899 bytes).
 PDF statistics:
- 39 PDF objects out of 1000 (max. 8388607)
+ 60 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

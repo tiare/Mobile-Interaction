@@ -61,11 +61,34 @@
 
 \section{Fitts' Law Optimization} 
 \subsection{Fitts' Law Examples} 
-Driving a car --> hitting brake and accelerator (large pedal, small pedal, great distance)\\
-Blindly use keys on keyboard (large enter key, small enter key, large/small spaces)\\
-Pop-up menus/advertisement on websites (exit button always small, usually at an edge/bottom --> thus far away, always somewhere else, barely visible), firefox back button, windows menu button
+Following are three examples where Fitts' law is applicable in real life or in interaction with a computer.\\
+	1. Driving a car: In a car with manual gear shift, the brake and accelerator are alternately pressed with the right foot. These pedals often vary in size and also in distance to each other, depending on the make and type of car. For instance a truck will have significantly larger pedals, compared to a compact car, and in a sportscar, the pedals will be closer together and also have less leverage path. These characteristics could be defined as the width W and distance D of a target, to evaluate the situation with Fitts' law.\\
+	2. In the webbrowser Firefox, the conception of the Back button has changed somewhat after version 8 \ref{jaws}. As opposed to then, the clickable area has been enlarged, and now includes the area between the button and the left screen bordern. The larger target facilitates clicking it and placement at the border allows fast and less precise momevent to reach it. \\ 
 
-Pointing example where Fits' Law does NOT apply: ??? Wack-A-Mole (Game) - since the game's intention is to make it hard to hit the moles it will try to break with fitts' law, or where design does not permit it --> placing Reply and Delete button close to each other, because they are most often used, may lead to mistakes --> navigation panes with drop down menus cause more cursor movement, but significantly help keeping order and grouping elements to reduce cluttering - although it might impede a fluent workflow --> unlock cellphone by "complicated" swipe is a real stumble stone for fluid workflow, but it is meant to be, for only this way it can actually ensure unintensional unlocking.
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.50\textwidth]{firefox.pdf}
+	\caption{Firefox back button: Increase of clickable area \ref{jaws}}
+	\label{fig:firefox}
+\end{figure}
+
+	3. The usual context menu which appears by right mouseclick performs quite well when evaluated with Fitt's, since it appears directly at the mouse position. This makes the path to the desired option quite short. However it could still be optimized, as can be seen in the following image \ref{azu}. If the menu would surround the mouse pointer in a circle, instead of being a list, the distance D to each option could be minimized. Also the accuracy of hitting each target could be adjusted by increasing the width of the circle, and thus also the width of each button.
+
+\begin{figure}[h]
+		\includegraphics[width=0.40\textwidth]{context_menu.pdf}
+	\caption{Traditional context menu}
+	\label{fig:context_menu}
+\end{figure}
+
+\begin{figure}[h]
+	\includegraphics[width=0.40\textwidth]{pie_textbox.pdf}
+	\caption{Pie context menu \ref{azu}}
+	\label{fig:pie_textbox}
+\end{figure}
+
+
+Following are a couple of examples, where Fitt's law does not apply. First of all let's look at an email client. According to Fitt's law, the buttons which are most frequently used, should be the most prominent with large W and would optimally be positioned close to each other to minimize D. However, the two most popular functions here are Reply and Delete, which have quite unrelated and even critical functionality. With critical, we mean, that the unintentional click on the wrong button could have a very negative outcome amd this is more likely to happen when they are close together. So if for instance, we wish to reply to an email, but click on Delete instead, we have made a grave mistake, which requires the functionality of undoing it. Thus many email clients are designed in a way that these two buttons are located at a safe distance, as can be seen in the following figure. [figure] Similarly an Accept and Cancel button should be kept at safe distance.\\
+Further there are the navigation panes os websites, which fold out on hover or when clicked, to reveal more targets. This significantly increases the distance W. On the other hand, it helps organize large websites which has an even more important effect.\\A somewhat less serious example is the arcade game Wack-A-Mole, where you hit moles with a hammer when they stick out their heads from their burrows. Since the game's intention is to make it difficult to hit the moles it will try to break with Fitts' law. Small mole heads appearing par apart should thus be favored.
 
 \subsection{Keyboard redesign} 
 Calculating the average movement time MT of pointing to the keyboard and then pointing to the call button.
@@ -91,12 +114,16 @@ Result: $MT_2 = MT_1 - b$ \\
 The movement time difference between the two designs is $b$, which clearly rates the new design better.
 
 \section{Fitts' Law Evaluation}
+The three devices to be tested, are the laptop's own touchpad, and external mouse and finally a Wacom tablet. The following nine trials have been repeated on each of these.
 results of all 3 experiments --> screenshots of the 9 targets\\
+
+The following figures show the resulting graphs obtained with each of the three devices. Further details about the performance of each device are contained in the table below.
+
 Experiment 1: Touchpad --> Screenshot of result\\
 Experiment 2: Mouse --> Screenshot of result\\
 Experiment 3: Tablet / different User? --> Screenshot of result
 
-Table with results..
+
 
 %\subsection{Resultate}
 %Das Walverine-System vermag besonders am Anfang des Spiels sehr gute Ergebnisse zu erzielen. In den weiteren Biet-Runden fällt Walverine jedoch zurück, da die Algorithmen mit welchen gearbeitet wird, die Umweltfaktoren zu wenig berücksichtig. So sollte beispielsweise berücksichtigt werden dass die Agenten mit ihren Aktionen die Preise beeinflussen 

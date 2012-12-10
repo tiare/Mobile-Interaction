@@ -89,7 +89,7 @@ public class Trial {
 	public void drawTest(){
 		parent.textSize(15);
 		parent.textAlign(PApplet.CENTER);
-		parent.fill(255);
+		parent.fill(0,0,255);
 		parent.text( "Trial " + trialNumber, parent.width/2, 20);
 		
 		int leftCenter = parent.width/2 - distance/2;

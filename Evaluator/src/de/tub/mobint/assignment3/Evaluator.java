@@ -1,9 +1,11 @@
 package de.tub.mobint.assignment3;
 
 
+import java.awt.Font;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
+import processing.core.PFont;
 
 public class Evaluator extends PApplet {
 	
@@ -26,19 +28,39 @@ public class Evaluator extends PApplet {
 	
 	Result result;
 	Countdown countdown;
+	PFont font;
 	
 	
 	public Evaluator() {
 		trials = new ArrayList<Trial>();
-		trials.add( new Trial(this, 20,100,1) );
 		
-		trials.add( new Trial(this, 100,300,2) );
+		trials.add( new Trial(this, 80,400,1) );
+		trials.add( new Trial(this, 80,200,2) );
+		trials.add( new Trial(this, 80,100,3) );
+		
+		trials.add( new Trial(this, 40, 200, 4) );
+		trials.add( new Trial(this, 40, 100, 5) );
+		trials.add( new Trial(this, 40, 50, 6) );
+		
+		trials.add( new Trial(this, 20,100,7) );
+		trials.add( new Trial(this, 20,50,8) );
+		trials.add( new Trial(this, 20,25,9) );
 	}	
 	
 	@Override
 	public void setup(){
 		size(screenWidth,screenHeight,P2D);
 		background(0xcc);
+		
+//		String [] fontList = PFont.list();
+//		for (int i = 0; i<fontList.length; i++)
+//			System.out.println(fontList[i]);
+		// The font must be located in the sketch's 
+		// "data" directory to load successfully
+		font = createFont("Tahoma", 50);//loadFont("Tahoma-15.vlw");
+		//System.out.println(font);
+		//setFont(font.getFont());
+		textFont(font);
 		
 		smooth();
 		
