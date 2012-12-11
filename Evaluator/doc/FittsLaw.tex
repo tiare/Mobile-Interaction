@@ -61,34 +61,43 @@
 
 \section{Fitts' Law Optimization} 
 \subsection{Fitts' Law Examples} 
-Following are three examples where Fitts' law is applicable in real life or in interaction with a computer.\\
-	1. Driving a car: In a car with manual gear shift, the brake and accelerator are alternately pressed with the right foot. These pedals often vary in size and also in distance to each other, depending on the make and type of car. For instance a truck will have significantly larger pedals, compared to a compact car, and in a sportscar, the pedals will be closer together and also have less leverage path. These characteristics could be defined as the width W and distance D of a target, to evaluate the situation with Fitts' law.\\
-	2. In the webbrowser Firefox, the conception of the Back button has changed somewhat after version 8 \ref{jaws}. As opposed to then, the clickable area has been enlarged, and now includes the area between the button and the left screen bordern. The larger target facilitates clicking it and placement at the border allows fast and less precise momevent to reach it. \\ 
+Following are three examples where Fitts' law is applicable in real life or in interaction with a computer.
+\subsection*{Driving a car:} In a car with manual gear shift, the brake and accelerator are alternately pressed with the right foot. These pedals often vary in size and also in distance to each other, depending on the make and type of car. For instance a truck will have significantly larger pedals, compared to a compact car, and in a sportscar, the pedals will be closer together and also have less leverage path. These characteristics could be defined as the width W and distance D of a target, to evaluate the situation with Fitts' law.
+\subsection*{Firefox Back button:} In the webbrowser Firefox, the conception of the Back button has changed somewhat after version 8 [1]. As opposed to then, the clickable area has been enlarged, and now includes the area between the button and the left screen bordern. The larger target facilitates clicking it and placement at the border allows fast and less precise momevent to reach it.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
-		\includegraphics[width=0.50\textwidth]{firefox.pdf}
-	\caption{Firefox back button: Increase of clickable area \ref{jaws}}
+		\includegraphics[width=0.40\textwidth]{firefox.pdf}
+	\caption{Firefox back button - increase of clickable area [1]}
 	\label{fig:firefox}
 \end{figure}
 
-	3. The usual context menu which appears by right mouseclick performs quite well when evaluated with Fitt's, since it appears directly at the mouse position. This makes the path to the desired option quite short. However it could still be optimized, as can be seen in the following image \ref{azu}. If the menu would surround the mouse pointer in a circle, instead of being a list, the distance D to each option could be minimized. Also the accuracy of hitting each target could be adjusted by increasing the width of the circle, and thus also the width of each button.
+\subsection*{Context Menu:} The usual context menu which appears by right mouseclick performs quite well when evaluated with Fitt's, since it appears directly at the mouse position. This makes the path to the desired option quite short. However it could still be optimized, as can be seen in the image below [2]. If the menu would surround the mouse pointer in a circle, instead of being a list, the distance D to each option could be minimized. Also the accuracy of hitting each target could be adjusted by increasing the width of the circle, and thus also the width of each button.
 
-\begin{figure}[h]
-		\includegraphics[width=0.40\textwidth]{context_menu.pdf}
-	\caption{Traditional context menu}
+\begin{figure}[ht]
+		\includegraphics[width=1.00\textwidth]{context_menu.pdf}
+	\caption{Traditional context menu (left), pie context menu (right) [2]}
 	\label{fig:context_menu}
 \end{figure}
+%\begin{figure}[h]
+%	\includegraphics[width=0.40\textwidth]{pie_textbox.pdf}
+%	\caption{Pie context menu \ref{azu}}
+%	\label{fig:pie_textbox}
+%\end{figure}
 
-\begin{figure}[h]
-	\includegraphics[width=0.40\textwidth]{pie_textbox.pdf}
-	\caption{Pie context menu \ref{azu}}
-	\label{fig:pie_textbox}
+
+\subsection*{Negative Examples:} Following are a couple of examples, where Fitt's law does not apply.\\
+First of all let's look at an email client. According to Fitt's law, the buttons which are most frequently used, should be the most prominent with large W and would optimally be positioned close to each other to minimize D. However, the two most popular functions here are Reply and Delete, which have quite unrelated and even critical functionality. With critical, we mean, that the unintentional click on the wrong button could have a very negative outcome and this is more likely to happen when they are close together. So if for instance, we wish to reply to an email, but click on Delete instead, we have made a grave mistake, which requires the functionality of undoing it. Thus many email clients are designed in a way that these two buttons are located at a safe distance, as can be seen in the following figure. Similarly an Accept and Cancel button should be kept at safe distance.
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=1.00\textwidth]{mailfail.pdf}
+	\caption{Problematic button placement of Reply and Delete on Mac Mail compared to Gmail}
+	\label{fig:mailfail}
 \end{figure}
 
+Further there are the navigation panes on websites, which fold out on hover or when clicked, to reveal more targets. This significantly increases the distance W. On the other hand, it helps organize large websites which has an even more important effect.\\A somewhat less serious example is the arcade game Wack-A-Mole, where you hit moles with a hammer when they stick out their heads from their burrows. Since the game's intention is to make it difficult to hit the moles it will try to break with Fitts' law. Small mole heads appearing par apart should thus be favored.
 
-Following are a couple of examples, where Fitt's law does not apply. First of all let's look at an email client. According to Fitt's law, the buttons which are most frequently used, should be the most prominent with large W and would optimally be positioned close to each other to minimize D. However, the two most popular functions here are Reply and Delete, which have quite unrelated and even critical functionality. With critical, we mean, that the unintentional click on the wrong button could have a very negative outcome amd this is more likely to happen when they are close together. So if for instance, we wish to reply to an email, but click on Delete instead, we have made a grave mistake, which requires the functionality of undoing it. Thus many email clients are designed in a way that these two buttons are located at a safe distance, as can be seen in the following figure. [figure] Similarly an Accept and Cancel button should be kept at safe distance.\\
-Further there are the navigation panes os websites, which fold out on hover or when clicked, to reveal more targets. This significantly increases the distance W. On the other hand, it helps organize large websites which has an even more important effect.\\A somewhat less serious example is the arcade game Wack-A-Mole, where you hit moles with a hammer when they stick out their heads from their burrows. Since the game's intention is to make it difficult to hit the moles it will try to break with Fitts' law. Small mole heads appearing par apart should thus be favored.
 
 \subsection{Keyboard redesign} 
 Calculating the average movement time MT of pointing to the keyboard and then pointing to the call button.
@@ -115,24 +124,135 @@ The movement time difference between the two designs is $b$, which clearly rates
 
 \section{Fitts' Law Evaluation}
 The three devices to be tested, are the laptop's own touchpad, and external mouse and finally a Wacom tablet. The following nine trials have been repeated on each of these.
-results of all 3 experiments --> screenshots of the 9 targets\\
 
-The following figures show the resulting graphs obtained with each of the three devices. Further details about the performance of each device are contained in the table below.
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=1.00\textwidth]{screenshots.pdf}
+	\caption{Trials}
+	\label{fig:screenshots}
+\end{figure}
 
-Experiment 1: Touchpad --> Screenshot of result\\
-Experiment 2: Mouse --> Screenshot of result\\
-Experiment 3: Tablet / different User? --> Screenshot of result
 
+The following figures show the resulting graphs obtained with each of the three devices. Further details about the performance of each device are contained in the according tables.
 
+\newpage
+\subsection*{Device 1 - Touchpad}
+\vspace{1cm}
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.80\textwidth]{Touchpad.pdf}
+	\caption{Device 1: Touchpad}
+	\label{fig:Touchpad}
+\end{figure}
+\vspace{1cm}
+\begin{table}[ht]
+	\centering
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline
+			Trial &	D	& W	& ID	& hits	& errors	& MT\\
+			\hline
+			1	& 400	& 80	& 2.58	& 15	& 2 &	0.67 \\
+			\hline
+			2	& 200	& 80	& 1.58	& 19	& 2	& 0.53 \\
+			\hline
+			3	& 100	& 80	& 1.0	& 30	& 0	& 0.33 \\
+			\hline
+			4	& 200	& 40	& 2.58	& 18	& 0	& 0.56 \\
+			\hline
+			5	& 100	& 40	& 1.58	& 18	& 3	& 0.56 \\
+			\hline
+			6	& 50	& 40	& 1.0	& 28	& 1 & 0.36 \\
+			\hline
+			7	& 100	& 20	& 2.58	& 16	& 2	& 0.63 \\
+			\hline
+			8	& 50	& 20	& 1.58	& 16	& 5	& 0.63 \\
+			\hline
+			9	& 25	& 20	& 1.0	& 26	& 4	& 0.38 \\
+			\hline
+		\end{tabular}
+	\caption{Device 1: Touchpad}
+	\label{tab:PerformanceOfTouchpad}
+\end{table}
 
-%\subsection{Resultate}
-%Das Walverine-System vermag besonders am Anfang des Spiels sehr gute Ergebnisse zu erzielen. In den weiteren Biet-Runden fällt Walverine jedoch zurück, da die Algorithmen mit welchen gearbeitet wird, die Umweltfaktoren zu wenig berücksichtig. So sollte beispielsweise berücksichtigt werden dass die Agenten mit ihren Aktionen die Preise beeinflussen 
+\newpage
+\subsection*{Device 2 - Mouse}
+\vspace{1cm}
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.80\textwidth]{Mouse.pdf}
+	\caption{Device 2: Mouse}
+	\label{fig:Mouse}
+\end{figure}
+\vspace{1cm}
+\begin{table}[ht]
+	\centering
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline
+			Trial &	D	& W	& ID	& hits	& errors	& MT\\
+			\hline
+			1	& 400	& 80	& 2.58	& 16	& 0	& 0.63 \\
+			2	& 200	& 80	& 1.58	& 20	& 3	& 0.5 \\
+			3	& 100	& 80	& 1.0	& 29	& 1	& 0.34 \\
+			4	& 200	& 40	& 2.58	& 16	& 1	& 0.63 \\
+			5	& 100	& 40	& 1.58	& 23	& 2	& 0.43 \\
+			6	& 50	& 40	& 1.0	& 25	& 1 &	0.4 \\
+			7	& 100	& 20	& 2.58	& 15	& 1	& 0.67 \\
+			8	& 50	& 20	& 1.58	& 19	& 3	& 0.53 \\
+			9	& 25	& 20	& 1.0	& 23	& 3	& 0.43 \\
+			\hline
+		\end{tabular}
+	\caption{Device 2: Mouse}
+	\label{tab:PerformanceOfMouse}
+\end{table}
+
+\newpage
+\subsection*{Device 3 - Tablet}
+\vspace{1cm}
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.80\textwidth]{Tablet.pdf}
+	\caption{Device 3: Tablet}
+	\label{fig:Tablet}
+\end{figure}
+\vspace{1cm}
+\begin{table}[ht]
+	\centering
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline
+			Trial &	D	& W	& ID	& hits	& errors	& MT\\
+			\hline
+			1	& 400	& 80	& 2.58	& 11	& 2	& 0.91 \\
+			2	& 200	& 80	& 1.58	& 20	& 4	& 0.5 \\
+			3	& 100	& 80	& 1.0	& 27	& 2	& 0.37 \\
+			4	& 200	& 40	& 2.58	& 17	& 1 & 0.59 \\
+			5	& 100	& 40	& 1.58	& 31	& 1	& 0.32 \\
+			6	& 50	& 40	& 1.0	& 25	& 7	& 0.4 \\
+			7	& 100	& 20	& 2.58	& 16	& 4	& 0.63 \\
+			8	& 50	& 20	& 1.58	& 23	& 6	& 0.43 \\
+			9	& 25	& 20	& 1.0	& 20	& 9	& 0.5 \\
+			\hline
+		\end{tabular}
+	\caption{Device 3: Tablet}
+	\label{tab:PerformanceOfTablet}
+\end{table}
+
 
 \vspace{1cm}
-
-%\textbf{Referenz}\\
+\newpage 
+%\textbf{References}\\
 %Shih-Fen Cheng Evan, Evan Leung, Kevin M. Lochner, Daniel M. Reeves, L. Julian Schvartzman,
 %and Michael P. Wellman. Walverine: A walrasian trading agent. In Second International
 %Joint Conference on Autonomous Agents and Multi-Agent Systems, pages 465–472, 2002.
+
+\section*{References}
+\begin{enumerate}
+	 
+\item Msujaws. Increasing the usability of Firefox’s Back button. In JAWS Blog, 2011.\\
+http://msujaws.wordpress.com/2011/06/30/increasing-the-usability-of-firefoxs-back-button/
+
+\item Tatiana Azundris. A Fire in the Pie. In Tatiana's personal Blog. http://blog.azundris\\
+.com/archives/168-A-fire-in-the-pie.html \\
+
+\end{enumerate}
 
 \end{document}

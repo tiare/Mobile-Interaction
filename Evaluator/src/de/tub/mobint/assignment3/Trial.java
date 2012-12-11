@@ -26,8 +26,7 @@ public class Trial {
 	
 	int[] insetColor1 = {190, 190, 190};
 	int[] insetColor2 = {230, 230, 230};
-	//TODO: add more
-	
+
 	public Trial(Evaluator parent,int width, int distance, int trialNumber) {
 		this.parent = parent;
 		this.width = width;
@@ -38,8 +37,8 @@ public class Trial {
 		errors = 0;
 		hits = 0;
 		
-		//duration = 10; //TODO: Make sure to change this!
-		duration = 5;
+		duration = 10;
+		//duration = 5;
 	}
 	
 	public void stop(){
