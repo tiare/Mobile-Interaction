@@ -17,7 +17,7 @@ Class=LaTeXView
 Document=FittsLaw.tex
 
 [Frame0_View0,0]
-TopLine=252
+TopLine=248
 Cursor=10880
 
 [SessionInfo]
